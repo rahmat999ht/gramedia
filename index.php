@@ -10,7 +10,7 @@ error_reporting(0);
 <html>
 
 <head>
-  <title>PHPJabbers.com | Free Gramedia Template</title>
+  <title>Gramedia</title>
   <meta charset="utf-8" />
   <meta
     name="viewport"

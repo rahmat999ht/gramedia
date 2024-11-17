@@ -82,6 +82,21 @@ CREATE TABLE `invoices` (
   FOREIGN KEY (`id_order`) REFERENCES `orders` (`id_order`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- Tabel Admin
+CREATE TABLE `admin` (
+  `id_admin` INT(11) NOT NULL AUTO_INCREMENT,
+  `username` VARCHAR(50) NOT NULL,
+  `password` VARCHAR(255) NOT NULL,
+  `role` ENUM('admin', 'kasir', 'atasan') NOT NULL,
+  PRIMARY KEY (`id_admin`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Data untuk tabel admin
+INSERT INTO `admin` (`username`, `password`, `role`) VALUES
+('admin1', '21232f297a57a5a743894a0e4a801fc3', 'admin'), -- password hash untuk 'admin'
+('kasir01', '5f4dcc3b5aa765d61d8327deb882cf99', 'kasir'), -- password hash untuk 'password'
+('atasan01', 'e99a18c428cb38d5f260853678922e03', 'atasan'); -- password hash untuk 'abc123'
+
 -- Data untuk tabel users
 INSERT INTO `users` (`username`, `password`, `email`) VALUES
 ('user', '827ccb0eea8a706c4c34a16891f84e7b', 'user@example.com'),
