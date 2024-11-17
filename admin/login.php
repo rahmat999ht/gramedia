@@ -1,3 +1,11 @@
+<?php
+session_start(); // Mulai session
+require_once("../koneksi.php");
+error_reporting(0);
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -79,7 +87,7 @@
                       </p>
                     </div>
 
-                    <form class="row g-3 needs-validation" novalidate>
+                    <form class="row g-3 needs-validation" action="login_process.php" method="POST" novalidate>
                       <div class="col-12">
                         <label for="yourUsername" class="form-label"
                           >Username</label

@@ -2,7 +2,6 @@
 session_start(); // Mulai session
 require_once("koneksi.php");
 error_reporting(0);
-
 ?>
 
 
@@ -36,13 +35,13 @@ error_reporting(0);
         <!-- Nav -->
         <nav>
           <ul>
-            <?php if (isset($_SESSION['username'])): ?>
-              <!-- Cek jika session username ada -->
+            <?php if (isset($_SESSION['user_id'])): ?>
+              <!-- Cek jika session user_id ada -->
               <li class="pe-3">
                 <a href="#" class="akun">
                   <h3>Welcome,</h3>
                   <h3>
-                    <?php echo htmlspecialchars($_SESSION['username']); ?>
+                    <?php echo htmlspecialchars($_SESSION['user_username']); ?>
                   </h3>
                   <!-- Tampilkan username -->
                 </a>
@@ -97,7 +96,7 @@ error_reporting(0);
         </li>
 
         <li><a href="contact.html">Contact Us</a></li>
-        <?php if (isset($_SESSION['username'])): ?>
+        <?php if (isset($_SESSION['user_id'])): ?>
           <li><a href="logout_user.php">Log-Out</a></li>
         <?php endif; ?>
       </ul>
