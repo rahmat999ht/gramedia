@@ -148,4 +148,48 @@ INSERT INTO `invoices` (`id_order`, `invoice_date`, `total_amount`) VALUES
 (1, '2024-10-01 10:20:00', 235000), -- Invoice for John Doe's order
 (2, '2024-10-02 15:35:00', 220000); -- Invoice for Jane Smith's order
 
+-- Data untuk tabel cart
+INSERT INTO cart (id_user) VALUES
+(1), -- John Doe's cart
+(2), -- Jane Smith's cart
+(3); -- Bob Martin's cart
+
+-- Data untuk tabel cart_items
+INSERT INTO cart_items (id_cart, id_book, quantity) VALUES
+(1, 1, 2), -- John Doe added 2 copies of 'The Great Gatsby'
+(1, 3, 1), -- John Doe added 1 copy of 'To Kill a Mockingbird'
+(2, 2, 1), -- Jane Smith added 1 copy of 'A Brief History of Time'
+(2, 4, 1), -- Jane Smith added 1 copy of 'The Power of Habit'
+(3, 1, 1), -- Bob Martin added 1 copy of 'The Great Gatsby'
+(3, 4, 2), -- Bob Martin added 2 copies of 'The Power of Habit'
+(3, 5, 3); -- Bob Martin added 3 copies of 'The Very Hungry Caterpillar'
+
+-- Data untuk tabel orders
+INSERT INTO orders (id_user, order_date) VALUES
+(1, '2024-10-01 10:15:00'), -- John Doe's first order
+(1, '2024-10-05 14:25:00'), -- John Doe's second order
+(2, '2024-10-02 15:30:00'), -- Jane Smith's first order
+(3, '2024-10-03 09:45:00'), -- Bob Martin's first order
+(3, '2024-10-06 16:05:00'); -- Bob Martin's second order
+
+-- Data untuk tabel order_details
+INSERT INTO order_details (id_order, id_book, quantity) VALUES
+(1, 1, 2), -- John Doe ordered 2 copies of 'The Great Gatsby'
+(1, 3, 1), -- John Doe ordered 1 copy of 'To Kill a Mockingbird'
+(2, 3, 1), -- John Doe ordered 1 copy of 'To Kill a Mockingbird' in second order
+(2, 5, 1), -- John Doe ordered 1 copy of 'The Very Hungry Caterpillar'
+(3, 1, 1), -- Bob Martin ordered 1 copy of 'The Great Gatsby'
+(3, 4, 2), -- Bob Martin ordered 2 copies of 'The Power of Habit'
+(3, 5, 3), -- Bob Martin ordered 3 copies of 'The Very Hungry Caterpillar'
+(4, 2, 1), -- Jane Smith ordered 1 copy of 'A Brief History of Time'
+(4, 4, 1); -- Jane Smith ordered 1 copy of 'The Power of Habit'
+
+-- Data untuk tabel invoices
+INSERT INTO invoices (id_order, invoice_date, total_amount) VALUES
+(1, '2024-10-01 10:20:00', 235000), -- Invoice for John Doe's first order
+(2, '2024-10-05 14:30:00', 200000), -- Invoice for John Doe's second order
+(3, '2024-10-02 15:35:00', 220000), -- Invoice for Jane Smith's order
+(4, '2024-10-03 09:50:00', 210000), -- Invoice for Bob Martin's first order
+(5, '2024-10-06 16:10:00', 250000); -- Invoice for Bob Martin's second order
+
 COMMIT;

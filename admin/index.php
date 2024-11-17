@@ -69,12 +69,7 @@ if (!$_SESSION['admin_role']) {
 
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
-        <li class="nav-item d-block d-lg-none">
-          <a class="nav-link nav-icon search-bar-toggle" href="#">
-            <i class="bi bi-search"></i>
-          </a>
-        </li>
-        <!-- End Search Icon-->
+        
 
         <li class="nav-item dropdown pe-3">
           <a
@@ -321,7 +316,7 @@ if (!$_SESSION['admin_role']) {
                 </div>
 
                 <div class="card-body pb-0">
-                  <h5 class="card-title">Pendaftar <span>| Today</span></h5>
+                  <h5 class="card-title">Transaksi <span>| Today</span></h5>
 
                   <table class="table table-borderless">
                     <thead>
