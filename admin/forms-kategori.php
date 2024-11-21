@@ -7,6 +7,24 @@ if (!$_SESSION['admin_role']) {
   echo '<script>alert("anda belum login atau session login berakhir"); window.location.href="login.php";</script>';
   exit;
 }
+
+$categoryData = null;
+
+// Periksa apakah ada parameter id di URL
+if (isset($_GET['id'])) {
+  $categoryId = intval($_GET['id']); // Amankan input ID
+  $query = "SELECT * FROM categories WHERE id_category = $categoryId";
+  $result = mysqli_query($koneksi, $query);
+
+  // Ambil data buku jika ditemukan
+  if ($result && mysqli_num_rows($result) > 0) {
+    $categoryData = mysqli_fetch_assoc($result);
+  } else {
+    echo '<script>alert("Book not found!"); window.location.href="tables-buku.php";</script>';
+    exit;
+  }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -16,7 +34,7 @@ if (!$_SESSION['admin_role']) {
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
-  <title>Tables / Data - Gramedia Bootstrap Template</title>
+  <title>Forms / Layouts - Gramedia Bootstrap Template</title>
   <meta content="" name="description" />
   <meta content="" name="keywords" />
 
@@ -63,63 +81,55 @@ if (!$_SESSION['admin_role']) {
 
   <main id="main" class="main">
     <div class="pagetitle">
-      <h1>Data Pesanan</h1>
+      <h1>Form Layouts</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-          <li class="breadcrumb-item">Tables</li>
-          <li class="breadcrumb-item active">Data</li>
+          <li class="breadcrumb-item">Forms</li>
+          <li class="breadcrumb-item active">Layouts</li>
         </ol>
       </nav>
     </div>
     <!-- End Page Title -->
-
     <section class="section">
       <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-9">
           <div class="card">
             <div class="card-body">
+              <h5 class="card-title">Form Category</h5>
 
-              <!-- Table with stripped rows -->
-              <table class="table datatable">
-                <thead>
-                  <tr>
-                    <th><b>N</b>o</th>
-                    <th>Nama Pengguna</th>
-                    <th>Judul Buku</th>
-                    <th>Jumlah</th>
-                    <th>Tanggal Pesanan</th>
-                    <th>Total Harga</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <?php
-                  // Query untuk mendapatkan data transaksi dengan JOIN
-                  $sql = "SELECT orders.id_order, users.username, books.title, order_details.quantity, orders.order_date, (order_details.quantity * books.price) AS total_price FROM order_details JOIN orders ON order_details.id_order = orders.id_order JOIN users ON orders.id_user = users.id_user JOIN books ON order_details.id_book = books.id_book";
-                  $query = mysqli_query($koneksi, $sql);
-                  $no = 1;
-                  while ($row = mysqli_fetch_array($query)) {
-                  ?>
-                    <tr>
-                      <td><?php echo $no; ?></td>
-                      <td><?php echo htmlspecialchars($row['username']); ?></td>
-                      <td><?php echo htmlspecialchars($row['title']); ?></td>
-                      <td><?php echo $row['quantity']; ?></td>
-                      <td><?php echo date('d-m-Y H:i', strtotime($row['order_date'])); ?></td> <!-- Format tanggal -->
-                      <td><?php echo "Rp " . number_format($row['total_price'], 0, ',', '.'); ?></td> <!-- Format angka rupiah -->
-                    </tr>
-                  <?php
-                    $no++;
-                  }
-                  ?>
-                </tbody>
-              </table>
-              <!-- End Table with stripped rows -->
+              <!-- Form Add Category -->
+              <form action="fun_kategori/save.php" method="POST">
+                <!-- Input hidden untuk ID buku -->
+                <?php if ($categoryData): ?>
+                  <input type="hidden" name="id" value="<?php echo $categoryData['id_category']; ?>">
+                <?php endif; ?>
+
+                <div class="row mb-3">
+                  <label for="categoryName" class="col-sm-2 col-form-label">Category Name</label>
+                  <div class="col-sm-10">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="categoryName"
+                      name="category_name"
+                      placeholder="Enter category name"
+                      value="<?php echo $categoryData['name'] ?? ''; ?>"
+                      required />
+                  </div>
+                </div>
+                <div class="text-center">
+                  <button type="submit" class="btn btn-primary">Save Categoty</button>
+                  <button type="reset" class="btn btn-secondary">Reset</button>
+                </div>
+              </form>
+              <!-- End Form Add Category -->
             </div>
           </div>
         </div>
       </div>
     </section>
+
   </main>
   <!-- End #main -->
 

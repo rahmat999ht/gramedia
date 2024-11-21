@@ -16,7 +16,7 @@ if (!$_SESSION['admin_role']) {
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
-  <title>Tables / Data - NiceAdmin Bootstrap Template</title>
+  <title>Tables / Data - Gramedia Bootstrap Template</title>
   <meta content="" name="description" />
   <meta content="" name="keywords" />
 
@@ -47,7 +47,7 @@ if (!$_SESSION['admin_role']) {
   <link href="assets/css/style.css" rel="stylesheet" />
 
   <!-- =======================================================
-  * Template Name: NiceAdmin
+  * Template Name: Gramedia
   * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
   * Updated: Apr 20 2024 with Bootstrap v5.3.3
   * Author: BootstrapMade.com
@@ -56,123 +56,14 @@ if (!$_SESSION['admin_role']) {
 </head>
 
 <body>
-  <!-- ======= Header ======= -->
-  <header id="header" class="header fixed-top d-flex align-items-center">
-    <div class="d-flex align-items-center justify-content-between">
-      <a href="index.php" class="logo d-flex align-items-center">
-        <img src="assets/img/logo.png" alt="" />
-        <span class="d-none d-lg-block">NiceAdmin</span>
-      </a>
-      <i class="bi bi-list toggle-sidebar-btn"></i>
-    </div>
-    <!-- End Logo -->
-
-
-
-    <nav class="header-nav ms-auto">
-      <ul class="d-flex align-items-center">
-
-
-        <li class="nav-item dropdown pe-3">
-          <a
-            class="nav-link nav-profile d-flex align-items-center pe-0"
-            href="#"
-            data-bs-toggle="dropdown">
-            <img
-              src="assets/img/profile-img.jpg"
-              alt="Profile"
-              class="rounded-circle" />
-            <span class="d-none d-md-block dropdown-toggle ps-2">K. Anderson</span> </a><!-- End Profile Iamge Icon -->
-
-          <ul
-            class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
-            <li class="dropdown-header">
-              <h6>Kevin Anderson</h6>
-              <span>Web Designer</span>
-            </li>
-            <li>
-              <hr class="dropdown-divider" />
-            </li>
-
-
-            <li>
-              <a class="dropdown-item d-flex align-items-center" href="#">
-                <i class="bi bi-box-arrow-right"></i>
-                <span>Sign Out</span>
-              </a>
-            </li>
-          </ul>
-          <!-- End Profile Dropdown Items -->
-        </li>
-        <!-- End Profile Nav -->
-      </ul>
-    </nav>
-    <!-- End Icons Navigation -->
-  </header>
-  <!-- End Header -->
-  <!-- ======= Sidebar ======= -->
-  <aside id="sidebar" class="sidebar">
-    <ul class="sidebar-nav" id="sidebar-nav">
-      <!-- Dashboard Menu -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="index.php">
-          <i class="bi bi-grid"></i>
-          <span>Dashboard</span>
-        </a>
-      </li>
-      <!-- End Dashboard Nav -->
-
-      <!-- Buku Menu -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="tables-buku.php">
-          <i class="bi bi-book"></i>
-          <span>Buku</span>
-        </a>
-      </li>
-      <!-- End Buku Nav -->
-
-      <!-- Kategori Menu -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="tables-kategori.php">
-          <i class="bi bi-tags"></i>
-          <span>Kategori</span>
-        </a>
-      </li>
-      <!-- End Kategori Nav -->
-
-      <!-- Pesanan Menu -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="tables-pesanan.php">
-          <i class="bi bi-cart"></i>
-          <span>Pesanan</span>
-        </a>
-      </li>
-      <!-- End Pesanan Nav -->
-
-      <!-- Transaksi Menu -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="tables-transaksi.php">
-          <i class="bi bi-credit-card"></i>
-          <span>Transaksi</span>
-        </a>
-      </li>
-      <!-- End Transaksi Nav -->
-
-      <!-- Pengguna Menu -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="tables-pengguna.php">
-          <i class="bi bi-person-circle"></i>
-          <span>Pengguna</span>
-        </a>
-      </li>
-      <!-- End Pengguna Nav -->
-    </ul>
-  </aside>
-  <!-- End Sidebar -->
+  <?php
+  include 'header.php';
+  include 'sidebar.php';
+  ?>
 
   <main id="main" class="main">
     <div class="pagetitle">
-      <h1>Data Tables</h1>
+      <h1>Data Transaksi</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.php">Home</a></li>
@@ -188,38 +79,44 @@ if (!$_SESSION['admin_role']) {
         <div class="col-lg-12">
           <div class="card">
             <div class="card-body">
-              <a href="forms-add-buku.php" class="btn btn-primary btn-custom my-3">
-                Tambah
-              </a>
-
+          
               <!-- Table with stripped rows -->
-              <table class="table">
+              <table class="table datatable">
                 <thead>
                   <tr>
                     <th><b>N</b>o</th>
                     <th>Nama Pengguna</th>
                     <th>Judul Buku</th>
                     <th>Jumlah</th>
-                    <th>Tanggal Pesanan</th>
-                    <th>Total Harga</th>
+                    <th>Status Keranjang</th>
+                    <th>Jumlah Checkout</th>
                     <th>Aksi</th>
                   </tr>
                 </thead>
-                <?php
-                // Query untuk mendapatkan data transaksi dengan JOIN
-                $sql = "SELECT orders.id_order, users.username, books.title, order_details.quantity, orders.order_date, (order_details.quantity * books.price) AS total_price FROM order_details JOIN orders ON order_details.id_order = orders.id_order JOIN users ON orders.id_user = users.id_user JOIN books ON order_details.id_book = books.id_book";
-                $query = mysqli_query($koneksi, $sql);
-                $no = 1;
-                while ($row = mysqli_fetch_array($query)) {
-                ?>
-                  <tbody>
+                <tbody>
+                  <?php
+                  // Query untuk mendapatkan data keranjang dengan JOIN dan menghitung jumlah checkout
+                  $sql = "SELECT cart.id_cart, users.username, books.title, cart_items.quantity, 
+          CASE WHEN cart.id_user IS NOT NULL THEN 'Di dalam keranjang' ELSE 'Keranjang kosong' END AS status, 
+          IFNULL(COUNT(orders.id_order), 0) AS checkout_count
+          FROM cart_items
+          JOIN cart ON cart_items.id_cart = cart.id_cart
+          JOIN users ON cart.id_user = users.id_user
+          JOIN books ON cart_items.id_book = books.id_book
+          LEFT JOIN orders ON orders.id_user = users.id_user AND orders.id_order IN 
+            (SELECT id_order FROM order_details WHERE id_book = cart_items.id_book)
+          GROUP BY users.id_user, cart.id_cart, books.id_book, cart_items.id_item";
+                  $query = mysqli_query($koneksi, $sql);
+                  $no = 1;
+                  while ($row = mysqli_fetch_array($query)) {
+                  ?>
                     <tr>
                       <td><?php echo $no; ?></td>
                       <td><?php echo htmlspecialchars($row['username']); ?></td>
                       <td><?php echo htmlspecialchars($row['title']); ?></td>
                       <td><?php echo $row['quantity']; ?></td>
-                      <td><?php echo date('d-m-Y H:i', strtotime($row['order_date'])); ?></td> <!-- Format tanggal -->
-                      <td><?php echo number_format($row['total_price'], 0, ',', '.'); ?></td> <!-- Format angka rupiah -->
+                      <td><?php echo htmlspecialchars($row['status']); ?></td>
+                      <td><?php echo $row['checkout_count']; ?></td>
                       <td>
                         <button class="btn btn-info btn-view-book" data-id="<?php echo $row['id_books']; ?>" data-bs-toggle="tooltip" data-bs-placement="top" title="Lihat Detail">
                           <i class="bi bi-eye"></i>
@@ -229,13 +126,14 @@ if (!$_SESSION['admin_role']) {
                         </button>
                       </td>
                     </tr>
-                  </tbody>
-                <?php
-                  $no++;
-                }
-                ?>
+                  <?php
+                    $no++;
+                  }
+                  ?>
+                </tbody>
               </table>
               <!-- End Table with stripped rows -->
+
             </div>
           </div>
         </div>
@@ -244,20 +142,9 @@ if (!$_SESSION['admin_role']) {
   </main>
   <!-- End #main -->
 
-  <!-- ======= Footer ======= -->
-  <footer id="footer" class="footer">
-    <div class="copyright">
-      &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
-    </div>
-    <div class="credits">
-      <!-- All the links in the footer should remain intact. -->
-      <!-- You can delete the links only if you purchased the pro version. -->
-      <!-- Licensing information: https://bootstrapmade.com/license/ -->
-      <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-      Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-    </div>
-  </footer>
-  <!-- End Footer -->
+  <?php
+  include 'footer.php';
+  ?>
 
   <a
     href="#"

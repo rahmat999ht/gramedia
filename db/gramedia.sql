@@ -24,6 +24,7 @@ CREATE TABLE `categories` (
 -- Tabel Books
 CREATE TABLE `books` (
   `id_book` INT(11) NOT NULL AUTO_INCREMENT,
+  `image` VARCHAR(255) NOT NULL,
   `title` VARCHAR(255) NOT NULL,
   `author` VARCHAR(255) NOT NULL,
   `price` DECIMAL(10, 2) NOT NULL,

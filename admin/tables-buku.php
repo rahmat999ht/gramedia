@@ -16,7 +16,7 @@ if (!$_SESSION['admin_role']) {
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
-  <title>Tables / Data - NiceAdmin Bootstrap Template</title>
+  <title>Tables / Data - Gramedia Bootstrap Template</title>
   <meta content="" name="description" />
   <meta content="" name="keywords" />
 
@@ -47,7 +47,7 @@ if (!$_SESSION['admin_role']) {
   <link href="assets/css/style.css" rel="stylesheet" />
 
   <!-- =======================================================
-  * Template Name: NiceAdmin
+  * Template Name: Gramedia
   * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
   * Updated: Apr 20 2024 with Bootstrap v5.3.3
   * Author: BootstrapMade.com
@@ -56,120 +56,10 @@ if (!$_SESSION['admin_role']) {
 </head>
 
 <body>
-  <!-- ======= Header ======= -->
-  <header id="header" class="header fixed-top d-flex align-items-center">
-    <div class="d-flex align-items-center justify-content-between">
-      <a href="index.php" class="logo d-flex align-items-center">
-        <img src="assets/img/logo.png" alt="" />
-        <span class="d-none d-lg-block">NiceAdmin</span>
-      </a>
-      <i class="bi bi-list toggle-sidebar-btn"></i>
-    </div>
-    <!-- End Logo -->
-
-
-
-    <nav class="header-nav ms-auto">
-      <ul class="d-flex align-items-center">
-
-        <li class="nav-item dropdown pe-3">
-          <a
-            class="nav-link nav-profile d-flex align-items-center pe-0"
-            href="#"
-            data-bs-toggle="dropdown">
-            <img
-              src="assets/img/profile-img.jpg"
-              alt="Profile"
-              class="rounded-circle" />
-            <span class="d-none d-md-block dropdown-toggle ps-2">K. Anderson</span> </a><!-- End Profile Iamge Icon -->
-
-          <ul
-            class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
-            <li class="dropdown-header">
-              <h6>Kevin Anderson</h6>
-              <span>Web Designer</span>
-            </li>
-            <li>
-              <hr class="dropdown-divider" />
-            </li>
-
-
-            <li>
-              <a class="dropdown-item d-flex align-items-center" href="#">
-                <i class="bi bi-box-arrow-right"></i>
-                <span>Sign Out</span>
-              </a>
-            </li>
-          </ul>
-          <!-- End Profile Dropdown Items -->
-        </li>
-        <!-- End Profile Nav -->
-      </ul>
-    </nav>
-    <!-- End Icons Navigation -->
-  </header>
-  <!-- End Header -->
-
-  <!-- ======= Sidebar ======= -->
-  <aside id="sidebar" class="sidebar">
-    <ul class="sidebar-nav" id="sidebar-nav">
-      <!-- Dashboard Menu -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="index.php">
-          <i class="bi bi-grid"></i>
-          <span>Dashboard</span>
-        </a>
-      </li>
-      <!-- End Dashboard Nav -->
-
-      <!-- Buku Menu -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="tables-buku.php">
-          <i class="bi bi-book"></i>
-          <span>Buku</span>
-        </a>
-      </li>
-      <!-- End Buku Nav -->
-
-      <!-- Kategori Menu -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="tables-kategori.php">
-          <i class="bi bi-tags"></i>
-          <span>Kategori</span>
-        </a>
-      </li>
-      <!-- End Kategori Nav -->
-
-      <!-- Pesanan Menu -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="tables-pesanan.php">
-          <i class="bi bi-cart"></i>
-          <span>Pesanan</span>
-        </a>
-      </li>
-      <!-- End Pesanan Nav -->
-
-      <!-- Transaksi Menu -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="tables-transaksi.php">
-          <i class="bi bi-credit-card"></i>
-          <span>Transaksi</span>
-        </a>
-      </li>
-      <!-- End Transaksi Nav -->
-
-      <!-- Pengguna Menu -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="tables-pengguna.php">
-          <i class="bi bi-person-circle"></i>
-          <span>Pengguna</span>
-        </a>
-      </li>
-      <!-- End Pengguna Nav -->
-    </ul>
-  </aside>
-  <!-- End Sidebar -->
-
+  <?php
+  include 'header.php';
+  include 'sidebar.php';
+  ?>
 
   <main id="main" class="main">
     <div class="pagetitle">
@@ -190,15 +80,16 @@ if (!$_SESSION['admin_role']) {
           <div class="card">
             <div class="card-body">
 
-              <a href="forms-add-buku.php" class="btn btn-primary btn-custom my-3">
+              <a href="forms-buku.php" class="btn btn-primary btn-custom my-3">
                 Tambah
               </a>
 
               <!-- Table with stripped rows -->
-              <table class="table">
+              <table class="table datatable">
                 <thead>
                   <tr>
                     <th><b>N</b>o</th>
+                    <th>Image</th>
                     <th>Judul</th>
                     <th>Penulis</th>
                     <th>Harga</th>
@@ -207,38 +98,75 @@ if (!$_SESSION['admin_role']) {
                     <th>Aksi</th>
                   </tr>
                 </thead>
-                <?php
-                // Query dengan JOIN untuk mendapatkan nama kategori
-                $sql = "SELECT * FROM `books` LEFT JOIN categories ON books.id_category = categories.id_category";
-                $query = mysqli_query($koneksi, $sql);
-                $no = 1;
-                while ($row = mysqli_fetch_array($query)) {
-                ?>
-                  <tbody>
+                <tbody>
+                  <?php
+                  // Query dengan JOIN untuk mendapatkan nama kategori
+                  $sql = "SELECT * FROM `books` LEFT JOIN categories ON books.id_category = categories.id_category";
+                  $query = mysqli_query($koneksi, $sql);
+                  $no = 1;
+                  while ($row = mysqli_fetch_array($query)) {
+                    $bookId = htmlspecialchars($row['id_book']);
+                    $bookTitle = htmlspecialchars($row['title']);
+                    $bookAuthor = htmlspecialchars($row['author']);
+                    $bookPrice = number_format($row['price'], 0, ',', '.');
+                    $bookStock = htmlspecialchars($row['stock']);
+                    $bookCategory = htmlspecialchars($row['name']);
+                    $bookImage = !empty($row['image']) ? '../../images/' . htmlspecialchars($row['image']) : 'assets/img/logo.png';
+                  ?>
                     <tr>
                       <td><?php echo $no; ?></td>
-                      <td><?php echo htmlspecialchars($row['title']); ?></td>
-                      <td><?php echo htmlspecialchars($row['author']); ?></td>
-                      <td><?php echo number_format($row['price'], 0, ',', '.'); ?></td> <!-- Menampilkan harga dengan format angka -->
-                      <td><?php echo $row['stock']; ?></td>
-                      <td><?php echo htmlspecialchars($row['name']); ?></td> <!-- Menampilkan nama kategori -->
                       <td>
-                        <button class="btn btn-info btn-view-book" data-id="<?php echo $row['id_books']; ?>" data-bs-toggle="tooltip" data-bs-placement="top" title="Lihat Detail">
+                        <img src="<?php echo $bookImage; ?>" alt="<?php echo $bookTitle; ?>" style="width: auto; height: 40px;">
+                      </td>
+                      <td><?php echo $bookTitle; ?></td>
+                      <td><?php echo $bookAuthor; ?></td>
+                      <td><?php echo $bookPrice; ?></td>
+                      <td><?php echo $bookStock; ?></td>
+                      <td><?php echo $bookCategory; ?></td>
+                      <td>
+                        <button class="btn btn-info btn-view-book" data-id="<?php echo $bookId; ?>" data-bs-toggle="modal" data-bs-target="#modalDetailBook<?php echo $bookId; ?>" title="Lihat Detail">
                           <i class="bi bi-eye"></i>
                         </button>
-                        <button class="btn btn-warning btn-edit-book" data-id="<?php echo $row['id_books']; ?>" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Buku">
-                          <i class="bi bi-pencil"></i>
+                        <!-- Modal Detail Buku -->
+                        <div class="modal fade" id="modalDetailBook<?php echo $bookId; ?>" tabindex="-1" aria-labelledby="modalDetailBookLabel<?php echo $bookId; ?>" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="modalDetailBookLabel<?php echo $bookId; ?>">Detail Buku</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body">
+                                <div class="text-center">
+                                  <img src="<?php echo $bookImage; ?>" alt="Book Image" style="width: 150px; height: auto; margin-bottom: 15px;">
+                                </div>
+                                <p><strong>Judul:</strong> <?php echo $bookTitle; ?></p>
+                                <p><strong>Penulis:</strong> <?php echo $bookAuthor; ?></p>
+                                <p><strong>Harga:</strong> <?php echo $bookPrice; ?></p>
+                                <p><strong>Stok:</strong> <?php echo $bookStock; ?></p>
+                                <p><strong>Kategori:</strong> <?php echo $bookCategory; ?></p>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <button class="btn btn-warning btn-edit-book" data-id="<?php echo $bookId; ?>" title="Edit Buku">
+                          <a href="forms-buku.php?id=<?php echo $bookId; ?>" class="text-decoration-none text-dark">
+                            <i class="bi bi-pencil"></i>
+                          </a>
                         </button>
-                        <button class="btn btn-danger btn-delete-book" data-id="<?php echo $row['id_books']; ?>" onclick="return confirm('Yakin ingin menghapus buku ini?');" data-bs-toggle="tooltip" data-bs-placement="top" title="Hapus Buku">
+                        <button
+                          class="btn btn-danger btn-delete-book"
+                          data-id="<?php echo $bookId; ?>"
+                          title="Hapus Buku">
                           <i class="bi bi-trash"></i>
                         </button>
                       </td>
                     </tr>
-                  </tbody>
-                <?php
-                  $no++;
-                }
-                ?>
+                  <?php $no++;
+                  } ?>
+                </tbody>
               </table>
               <!-- End Table with stripped rows -->
             </div>
@@ -249,24 +177,51 @@ if (!$_SESSION['admin_role']) {
   </main>
   <!-- End #main -->
 
-  <!-- ======= Footer ======= -->
-  <footer id="footer" class="footer">
-    <div class="copyright">
-      &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
-    </div>
-    <div class="credits">
-      <!-- All the links in the footer should remain intact. -->
-      <!-- You can delete the links only if you purchased the pro version. -->
-      <!-- Licensing information: https://bootstrapmade.com/license/ -->
-      <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-      Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-    </div>
-  </footer>
-  <!-- End Footer -->
+  <?php
+  include 'footer.php';
+  ?>
 
   <a
     href="#"
     class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const deleteButtons = document.querySelectorAll('.btn-delete-book');
+
+      deleteButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          const bookId = this.getAttribute('data-id'); // Ganti id_book ke data-id
+
+          if (confirm('Yakin ingin menghapus buku ini?')) {
+            fetch('fun_book/delete.php', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                  action: 'delete',
+                  id: bookId
+                })
+              })
+              .then(response => response.json())
+              .then(data => {
+                if (data.success) {
+                  alert(data.message);
+                  location.reload(); // Reload halaman untuk memperbarui daftar buku
+                } else {
+                  alert(data.message);
+                }
+              })
+              .catch(error => {
+                console.error('Error:', error);
+                alert('Terjadi kesalahan saat menghapus buku.');
+              });
+          }
+        });
+      });
+    });
+  </script>
 
   <!-- Vendor JS Files -->
   <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
