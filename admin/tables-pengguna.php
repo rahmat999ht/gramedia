@@ -164,9 +164,48 @@ if (!isset($_SESSION['admin_role']) || $_SESSION['admin_role'] != 'admin') {
                           </div>
                         </div>
 
-                        <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalUpdateUser<?php echo $row['id_user']; ?>" title="Ubah Status Pengguna">
-                          <i class="bi bi-pencil"></i>
+                        <button class="btn btn-warning">
+                          <a href="forms-pengguna.php?id_user=<?php echo $row['id_user']; ?>" class="text-decoration-none text-white" title="Ubah Info Pengguna">
+                            <i class="bi bi-pencil"></i>
+                          </a>
                         </button>
+
+
+                        <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#modalUpdateUser<?php echo $row['id_user']; ?>" title="Ubah Status Pengguna">
+                          <i class="bi bi-gear"></i>
+                        </button>
+
+                        <!-- Modal Konfirmasi Aktifkan / Non-Aktifkan -->
+                        <div class="modal fade" id="modalUpdateUser<?php echo $row['id_user']; ?>" tabindex="-1" aria-labelledby="modalUpdateUserLabel<?php echo $row['id_user']; ?>" aria-hidden="true">
+                          <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="modalUpdateUserLabel<?php echo $row['id_user']; ?>">Ubah Status Pengguna</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body">
+                                <form action="fun_pengguna/is_active.php" method="POST">
+                                  <input type="hidden" name="id_user" value="<?php echo $row['id_user']; ?>">
+
+                                  <!-- Pertanyaan Konfirmasi -->
+                                  <p>Apakah Anda yakin ingin <?php echo $row['isActive'] == 1 ? 'menonaktifkan' : 'mengaktifkan'; ?> akun ini?</p>
+
+                                  <!-- Pilihan Status Aktif -->
+                                  <div class="mb-3">
+                                    <label for="isActive" class="form-label">Pilih Status</label>
+                                    <select class="form-select" name="isActive" required>
+                                      <option value="1" <?php echo $row['isActive'] == 1 ? 'selected' : ''; ?>>Aktif</option>
+                                      <option value="0" <?php echo $row['isActive'] == 0 ? 'selected' : ''; ?>>Tidak Aktif</option>
+                                    </select>
+                                  </div>
+
+                                  <!-- Tombol Konfirmasi -->
+                                  <button type="submit" class="btn btn-primary">Perbarui Status</button>
+                                </form>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
 
                       </td>
                     </tr>

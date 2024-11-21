@@ -1,3 +1,30 @@
+<?php
+
+session_start(); // Mulai session
+require_once("../koneksi.php");
+error_reporting(0);
+
+// Cek apakah user sudah login dan memiliki role admin
+if (!isset($_SESSION['admin_role']) || $_SESSION['admin_role'] != 'admin') {
+  echo '<script>alert("Anda belum login atau session login berakhir"); window.location.href="login.php";</script>';
+  exit;
+}
+
+// Ambil id_user dari URL
+$id_user = $_GET['id_user'];
+
+// Query untuk mengambil data pengguna berdasarkan id_user
+$sql = "SELECT * FROM users WHERE id_user = ?";
+$stmt = $koneksi->prepare($sql);
+$stmt->bind_param("i", $id_user);
+$stmt->execute();
+$result = $stmt->get_result();
+
+// Ambil data pengguna
+$user = $result->fetch_assoc();
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,7 +32,7 @@
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
-  <title>Forms / Layouts - Gramedia Bootstrap Template</title>
+  <title>Forms / Ubah Info Pengguna</title>
   <meta content="" name="description" />
   <meta content="" name="keywords" />
 
@@ -52,7 +79,7 @@
 
   <main id="main" class="main">
     <div class="pagetitle">
-      <h1>Form Layouts</h1>
+      <h1>Form Ubah Info Pengguna</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.php">Home</a></li>
@@ -67,97 +94,38 @@
         <div class="col-lg-9">
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Horizontal Form</h5>
+              <h5 class="card-title">Form Edit Pengguna</h5>
+              <!-- Form untuk edit pengguna -->
+              <form action="fun_pengguna/update.php" method="POST">
+                <input type="hidden" name="id_user" value="<?php echo $user['id_user']; ?>">
 
-              <!-- Horizontal Form -->
-              <form>
                 <div class="row mb-3">
-                  <label for="inputEmail3" class="col-sm-2 col-form-label">Your Name</label>
+                  <label for="inputName" class="col-sm-2 col-form-label">Nama Pengguna</label>
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" id="inputText" />
+                    <input type="text" class="form-control" id="inputName" name="username" value="<?php echo $user['username']; ?>" />
                   </div>
                 </div>
+
                 <div class="row mb-3">
-                  <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
+                  <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
                   <div class="col-sm-10">
-                    <input
-                      type="email"
-                      class="form-control"
-                      id="inputEmail" />
+                    <input type="email" readonly class="form-control" id="inputEmail" name="email" value="<?php echo $user['email']; ?>" />
                   </div>
                 </div>
+
                 <div class="row mb-3">
-                  <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
+                  <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
                   <div class="col-sm-10">
-                    <input
-                      type="password"
-                      class="form-control"
-                      id="inputPassword" />
+                    <!-- Menampilkan password yang sudah terenkripsi MD5 -->
+                    <input type="text" class="form-control" id="inputPassword" name="password" placeholder="Masukkan password baru"/>
                   </div>
                 </div>
-                <fieldset class="row mb-3">
-                  <legend class="col-form-label col-sm-2 pt-0">Radios</legend>
-                  <div class="col-sm-10">
-                    <div class="form-check">
-                      <input
-                        class="form-check-input"
-                        type="radio"
-                        name="gridRadios"
-                        id="gridRadios1"
-                        value="option1"
-                        checked />
-                      <label class="form-check-label" for="gridRadios1">
-                        First radio
-                      </label>
-                    </div>
-                    <div class="form-check">
-                      <input
-                        class="form-check-input"
-                        type="radio"
-                        name="gridRadios"
-                        id="gridRadios2"
-                        value="option2" />
-                      <label class="form-check-label" for="gridRadios2">
-                        Second radio
-                      </label>
-                    </div>
-                    <div class="form-check disabled">
-                      <input
-                        class="form-check-input"
-                        type="radio"
-                        name="gridRadios"
-                        id="gridRadios3"
-                        value="option3"
-                        disabled />
-                      <label class="form-check-label" for="gridRadios3">
-                        Third disabled radio
-                      </label>
-                    </div>
-                  </div>
-                </fieldset>
-                <div class="row mb-3">
-                  <div class="col-sm-10 offset-sm-2">
-                    <div class="form-check">
-                      <input
-                        class="form-check-input"
-                        type="checkbox"
-                        id="gridCheck1" />
-                      <label class="form-check-label" for="gridCheck1">
-                        Example checkbox
-                      </label>
-                    </div>
-                  </div>
-                </div>
+
                 <div class="text-center">
-                  <button type="submit" class="btn btn-primary">
-                    Submit
-                  </button>
-                  <button type="reset" class="btn btn-secondary">
-                    Reset
-                  </button>
+                  <button type="submit" class="btn btn-primary">Perbarui</button>
+                  <button type="reset" class="btn btn-secondary">Reset</button>
                 </div>
               </form>
-              <!-- End Horizontal Form -->
             </div>
           </div>
         </div>
@@ -166,7 +134,7 @@
   </main>
   <!-- End #main -->
 
-    <?php
+  <?php
   include 'footer.php';
   ?>
 
