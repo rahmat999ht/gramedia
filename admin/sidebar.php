@@ -10,22 +10,26 @@
         </li>
         <!-- End Dashboard Nav -->
 
-        <!-- Buku Menu -->
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="tables-buku.php">
-                <i class="bi bi-book"></i>
-                <span>Buku</span>
-            </a>
-        </li>
+        <!-- Buku Menu (Hanya untuk Admin) -->
+        <?php if ($_SESSION['admin_role'] == 'admin' || $_SESSION['admin_role'] == 'atasan'): ?>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="tables-buku.php">
+                    <i class="bi bi-book"></i>
+                    <span>Buku</span>
+                </a>
+            </li>
+        <?php endif; ?>
         <!-- End Buku Nav -->
 
-        <!-- Kategori Menu -->
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="tables-kategori.php">
-                <i class="bi bi-tags"></i>
-                <span>Kategori</span>
-            </a>
-        </li>
+        <!-- Kategori Menu (Hanya untuk Admin) -->
+        <?php if ($_SESSION['admin_role'] == 'admin'): ?>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="tables-kategori.php">
+                    <i class="bi bi-tags"></i>
+                    <span>Kategori</span>
+                </a>
+            </li>
+        <?php endif; ?>
         <!-- End Kategori Nav -->
 
         <!-- Pesanan Menu -->
@@ -37,22 +41,27 @@
         </li>
         <!-- End Pesanan Nav -->
 
-        <!-- Transaksi Menu -->
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="tables-transaksi.php">
-                <i class="bi bi-credit-card"></i>
-                <span>Transaksi</span>
-            </a>
-        </li>
+        <!-- Transaksi Menu (Hanya untuk Atasan dan Kasir) -->
+        <?php if ($_SESSION['admin_role'] == 'kasir' || $_SESSION['admin_role'] == 'atasan'): ?>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="tables-transaksi.php">
+                    <i class="bi bi-credit-card"></i>
+                    <span>Transaksi</span>
+                </a>
+            </li>
+        <?php endif; ?>
         <!-- End Transaksi Nav -->
 
         <!-- Pengguna Menu -->
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="tables-pengguna.php">
-                <i class="bi bi-person-circle"></i>
-                <span>Pengguna</span>
-            </a>
-        </li>
+        <?php if ($_SESSION['admin_role'] == 'admin'): ?>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="tables-pengguna.php">
+                    <i class="bi bi-person-circle"></i>
+                    <span>Pengguna</span>
+                </a>
+            </li>
+        <?php endif; ?>
+
         <!-- End Pengguna Nav -->
     </ul>
 </aside>
