@@ -79,7 +79,7 @@ if (!$_SESSION['admin_role']) {
         <div class="col-lg-12">
           <div class="card">
             <div class="card-body">
-          
+
               <!-- Table with stripped rows -->
               <table class="table datatable">
                 <thead>
@@ -97,15 +97,20 @@ if (!$_SESSION['admin_role']) {
                   <?php
                   // Query untuk mendapatkan data keranjang dengan JOIN dan menghitung jumlah checkout
                   $sql = "SELECT cart.id_cart, users.username, books.title, cart_items.quantity, 
-          CASE WHEN cart.id_user IS NOT NULL THEN 'Di dalam keranjang' ELSE 'Keranjang kosong' END AS status, 
-          IFNULL(COUNT(orders.id_order), 0) AS checkout_count
-          FROM cart_items
-          JOIN cart ON cart_items.id_cart = cart.id_cart
-          JOIN users ON cart.id_user = users.id_user
-          JOIN books ON cart_items.id_book = books.id_book
-          LEFT JOIN orders ON orders.id_user = users.id_user AND orders.id_order IN 
-            (SELECT id_order FROM order_details WHERE id_book = cart_items.id_book)
-          GROUP BY users.id_user, cart.id_cart, books.id_book, cart_items.id_item";
+                  CASE WHEN cart.id_user IS NOT NULL THEN 'Di dalam keranjang' ELSE 'Keranjang kosong' 
+                  END AS status, COUNT(DISTINCT orders.id_order) AS checkout_count
+                  FROM cart_items JOIN cart ON cart_items.id_cart = cart.id_cart
+                  JOIN users ON cart.id_user = users.id_user
+                  JOIN books ON cart_items.id_book = books.id_book
+                  LEFT JOIN orders ON orders.id_user = users.id_user 
+                  AND EXISTS (
+                  SELECT 1 FROM order_details 
+                  WHERE order_details.id_order = orders.id_order 
+                  AND order_details.id_book = cart_items.id_book
+                  )
+                  GROUP BY cart.id_cart, users.username, books.title, cart_items.quantity
+                  LIMIT 0, 25";
+
                   $query = mysqli_query($koneksi, $sql);
                   $no = 1;
                   while ($row = mysqli_fetch_array($query)) {
@@ -118,13 +123,17 @@ if (!$_SESSION['admin_role']) {
                       <td><?php echo htmlspecialchars($row['status']); ?></td>
                       <td><?php echo $row['checkout_count']; ?></td>
                       <td>
-                        <button class="btn btn-info btn-view-book" data-id="<?php echo $row['id_books']; ?>" data-bs-toggle="tooltip" data-bs-placement="top" title="Lihat Detail">
-                          <i class="bi bi-eye"></i>
-                        </button>
-                        <button class="btn btn-warning btn-edit-book" data-id="<?php echo $row['id_books']; ?>" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Buku">
-                          <i class="bi bi-pencil"></i>
+                        <button
+                          class="btn btn-success btn-print-receipt"
+                          data-id="<?php echo $row['id_cart']; ?>"
+                          data-bs-toggle="tooltip"
+                          data-bs-placement="top"
+                          title="Cetak Nota"
+                          onclick="printNota(<?php echo $row['id_cart']; ?>)">
+                          <i class="bi bi-printer"></i>
                         </button>
                       </td>
+
                     </tr>
                   <?php
                     $no++;
@@ -149,6 +158,14 @@ if (!$_SESSION['admin_role']) {
   <a
     href="#"
     class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <script>
+    function printNota(idCart) {
+      console.log("ID Cart:", idCart); // Debugging
+      const printWindow = window.open(`fun_transaksi/cetak_nota.php?id_cart=${idCart}`, '_blank');
+      printWindow.focus();
+    }
+  </script>
 
   <!-- Vendor JS Files -->
   <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
