@@ -3,8 +3,9 @@ session_start(); // Mulai session
 require_once("../koneksi.php");
 error_reporting(0);
 
-if (!$_SESSION['admin_role']) {
-  echo '<script>alert("anda belum login atau session login berakhir"); window.location.href="login.php";</script>';
+// Cek apakah user sudah login dan memiliki role admin
+if (!isset($_SESSION['admin_role']) || $_SESSION['admin_role'] != 'admin') {
+  echo '<script>alert("Anda belum login atau session login berakhir"); window.location.href="login.php";</script>';
   exit;
 }
 ?>
@@ -45,14 +46,6 @@ if (!$_SESSION['admin_role']) {
 
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet" />
-
-  <!-- =======================================================
-  * Template Name: Gramedia
-  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
-  * Updated: Apr 20 2024 with Bootstrap v5.3.3
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
 </head>
 
 <body>
@@ -72,7 +65,6 @@ if (!$_SESSION['admin_role']) {
         </ol>
       </nav>
     </div>
-    <!-- End Page Title -->
 
     <section class="section">
       <div class="row">
@@ -88,6 +80,7 @@ if (!$_SESSION['admin_role']) {
                     <th>Username</th>
                     <th>Email</th>
                     <th>Email Terverifikasi</th>
+                    <th>Status Akun</th>
                     <th>Aksi</th>
                   </tr>
                 </thead>
@@ -104,18 +97,77 @@ if (!$_SESSION['admin_role']) {
                       <td><?php echo htmlspecialchars($row['username']); ?></td>
                       <td><?php echo htmlspecialchars($row['email']); ?></td>
                       <td>
-                        <?php echo $row['email_verified'] ? 'Ya' : 'Tidak'; ?>
+                        <!-- Menampilkan Status Email Verified dengan Badge -->
+                        <?php
+                        if ($row['email_verified'] == 1) {
+                          echo '<span class="badge bg-success">Terverifikasi</span>';
+                        } else {
+                          echo '<span class="badge bg-warning text-dark">Belum Terverifikasi</span>';
+                        }
+                        ?>
                       </td>
                       <td>
-                        <button class="btn btn-info btn-view-book" data-id="<?php echo $row['id_books']; ?>" data-bs-toggle="tooltip" data-bs-placement="top" title="Lihat Detail">
+                        <!-- Menampilkan Status isActive dengan Badge -->
+                        <?php
+                        if ($row['isActive'] == 1) {
+                          echo '<span class="badge bg-success">Aktif</span>';
+                        } else {
+                          echo '<span class="badge bg-danger">Non-Aktif</span>';
+                        }
+                        ?>
+                      </td>
+                      <td>
+                        <!-- View Detail Button (Triggers Modal) -->
+                        <button class="btn btn-info btn-view-user" data-id="<?php echo $row['id_user']; ?>" data-bs-toggle="modal" data-bs-target="#modalDetailUser<?php echo $row['id_user']; ?>" title="Lihat Detail">
                           <i class="bi bi-eye"></i>
                         </button>
-                        <button class="btn btn-warning btn-edit-book" data-id="<?php echo $row['id_books']; ?>" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Buku">
+
+                        <!-- Modal Detail Pengguna -->
+                        <div class="modal fade" id="modalDetailUser<?php echo $row['id_user']; ?>" tabindex="-1" aria-labelledby="modalDetailUserLabel<?php echo $row['id_user']; ?>" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="modalDetailUserLabel<?php echo $row['id_user']; ?>">Detail Pengguna</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body">
+                                <!-- Displaying User Details in Modal -->
+                                <p><strong>Username:</strong> <?php echo htmlspecialchars($row['username']); ?></p>
+                                <p><strong>Email:</strong> <?php echo htmlspecialchars($row['email']); ?></p>
+
+                                <!-- Status Email Verification with Badge -->
+                                <p><strong>Status Email:</strong>
+                                  <?php
+                                  if ($row['email_verified'] == 1) {
+                                    echo '<span class="badge bg-success">Terverifikasi</span>';
+                                  } else {
+                                    echo '<span class="badge bg-warning text-dark">Belum Terverifikasi</span>';
+                                  }
+                                  ?>
+                                </p>
+
+                                <!-- Status isActive with Badge -->
+                                <p><strong>Status Akun:</strong>
+                                  <?php
+                                  if ($row['isActive'] == 1) {
+                                    echo '<span class="badge bg-success">Aktif</span>';
+                                  } else {
+                                    echo '<span class="badge bg-danger">Non-Aktif</span>';
+                                  }
+                                  ?>
+                                </p>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalUpdateUser<?php echo $row['id_user']; ?>" title="Ubah Status Pengguna">
                           <i class="bi bi-pencil"></i>
                         </button>
-                        <button class="btn btn-danger btn-delete-book" data-id="<?php echo $row['id_books']; ?>" onclick="return confirm('Yakin ingin menghapus buku ini?');" data-bs-toggle="tooltip" data-bs-placement="top" title="Hapus Buku">
-                          <i class="bi bi-trash"></i>
-                        </button>
+
                       </td>
                     </tr>
                   <?php
@@ -132,22 +184,19 @@ if (!$_SESSION['admin_role']) {
       </div>
     </section>
   </main>
-  <!-- End #main -->
 
   <?php
   include 'footer.php';
   ?>
 
-  <a
-    href="#"
-    class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
   <!-- Vendor JS Files -->
   <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="assets/vendor/chart.js/chart.umd.js"></script>
   <script src="assets/vendor/echarts/echarts.min.js"></script>
-  <script src="assets/vendor/quill/quill.js"></script>
+  <script src="assets/vendor/quill/quill.min.js"></script>
   <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
   <script src="assets/vendor/tinymce/tinymce.min.js"></script>
   <script src="assets/vendor/php-email-form/validate.js"></script>

@@ -9,8 +9,9 @@ CREATE TABLE `users` (
   `username` VARCHAR(50) NOT NULL,
   `password` VARCHAR(255) NOT NULL,
   `email` VARCHAR(100) NOT NULL,
-  `email_verified` TINYINT(1) DEFAULT 0;
-  `verification_token` VARCHAR(255);
+  `email_verified` TINYINT(1) DEFAULT 0,
+  `verification_token` VARCHAR(255),
+  `isActive` TINYINT(1) DEFAULT 1;
   PRIMARY KEY (`id_user`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
