@@ -2,6 +2,31 @@
 session_start(); // Mulai session
 require_once("koneksi.php");
 error_reporting(0);
+
+// Query untuk buku terlaris
+$query_buku_terlaris = "SELECT 
+        b.id_book, 
+        b.image, 
+        b.title, 
+        b.price, 
+        b.stock, 
+        COALESCE(SUM(od.quantity), 0) AS total_sold
+    FROM 
+        books b
+    LEFT JOIN 
+        order_details od ON b.id_book = od.id_book
+    GROUP BY 
+        b.id_book
+    ORDER BY 
+        total_sold DESC
+    LIMIT 6";
+
+$result_buku_terlaris = mysqli_query($koneksi, $query_buku_terlaris);
+
+if (!$result_buku_terlaris) {
+  die("Error pada query: " . mysqli_error($koneksi));
+}
+
 ?>
 
 
@@ -28,7 +53,7 @@ error_reporting(0);
     <header id="header">
       <div class="inner">
         <!-- Logo -->
-        <a href="index.html" class="logo">
+        <a href="index.php" class="logo">
           <span class="fa fa-book"></span> <span class="title">Gramedia</span>
         </a>
 
@@ -79,23 +104,17 @@ error_reporting(0);
     <nav id="menu">
       <h2>Menu</h2>
       <ul>
-        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="index.php" class="active">Home</a></li>
 
-        <li><a href="products.html">Products</a></li>
+        <li><a href="products.php">Products</a></li>
 
-        <li><a href="checkout.html">Checkout</a></li>
+        <?php if (isset($_SESSION['user_id'])): ?>
+          <li><a href="checkout.php">Checkout</a></li>
+        <?php endif; ?>
 
-        <li>
-          <a href="#" class="dropdown-toggle">About</a>
-          <ul>
-            <li><a href="about.html">About Us</a></li>
-            <li><a href="blog.html">Blog</a></li>
-            <li><a href="testimonials.html">Testimonials</a></li>
-            <li><a href="terms.html">Terms</a></li>
-          </ul>
-        </li>
+        <li><a href="about.php">About Us</a></li>
 
-        <li><a href="contact.html">Contact Us</a></li>
+        <li><a href="contact.php">Contact Us</a></li>
         <?php if (isset($_SESSION['user_id'])): ?>
           <li><a href="logout_user.php">Log-Out</a></li>
         <?php endif; ?>
@@ -171,184 +190,32 @@ error_reporting(0);
 
         <br />
 
-        <h2 class="h2">Featured Products</h2>
-
-        <!-- Products -->
+        <!-- Buku Terlaris -->
+        <h2 class="h2">Buku Terlaris</h2>
         <section class="tiles">
-          <article class="style1">
-            <span class="image">
-              <img src="images/product-1-720x480.jpg" alt="" />
-            </span>
-            <a href="product-details.html">
-              <h2>Lorem ipsum dolor sit amet, consectetur</h2>
-
-              <p><del>$19.00</del> <strong>$19.00</strong></p>
-
-              <p>
-                Vestibulum id est eu felis vulputate hendrerit uspendisse
-                dapibus turpis in
-              </p>
-            </a>
-          </article>
-          <article class="style2">
-            <span class="image">
-              <img src="images/product-2-720x480.jpg" alt="" />
-            </span>
-            <a href="product-details.html">
-              <h2>Lorem ipsum dolor sit amet, consectetur</h2>
-
-              <p><del>$19.00</del> <strong>$19.00</strong></p>
-
-              <p>
-                Vestibulum id est eu felis vulputate hendrerit uspendisse
-                dapibus turpis in
-              </p>
-            </a>
-          </article>
-          <article class="style3">
-            <span class="image">
-              <img src="images/product-3-720x480.jpg" alt="" />
-            </span>
-            <a href="product-details.html">
-              <h2>Lorem ipsum dolor sit amet, consectetur</h2>
-
-              <p><del>$19.00</del> <strong>$19.00</strong></p>
-
-              <p>
-                Vestibulum id est eu felis vulputate hendrerit uspendisse
-                dapibus turpis in
-              </p>
-            </a>
-          </article>
-
-          <article class="style4">
-            <span class="image">
-              <img src="images/product-4-720x480.jpg" alt="" />
-            </span>
-            <a href="product-details.html">
-              <h2>Lorem ipsum dolor sit amet, consectetur</h2>
-
-              <p><del>$19.00</del> <strong>$19.00</strong></p>
-
-              <p>
-                Vestibulum id est eu felis vulputate hendrerit uspendisse
-                dapibus turpis in
-              </p>
-            </a>
-          </article>
-
-          <article class="style5">
-            <span class="image">
-              <img src="images/product-5-720x480.jpg" alt="" />
-            </span>
-            <a href="product-details.html">
-              <h2>Lorem ipsum dolor sit amet, consectetur</h2>
-
-              <p><del>$19.00</del> <strong>$19.00</strong></p>
-
-              <p>
-                Vestibulum id est eu felis vulputate hendrerit uspendisse
-                dapibus turpis in
-              </p>
-            </a>
-          </article>
-
-          <article class="style6">
-            <span class="image">
-              <img src="images/product-6-720x480.jpg" alt="" />
-            </span>
-            <a href="product-details.html">
-              <h2>Lorem ipsum dolor sit amet, consectetur</h2>
-
-              <p><del>$19.00</del> <strong>$19.00</strong></p>
-
-              <p>
-                Vestibulum id est eu felis vulputate hendrerit uspendisse
-                dapibus turpis in
-              </p>
-            </a>
-          </article>
+          <?php while ($row = mysqli_fetch_assoc($result_buku_terlaris)):
+            // Tentukan gambar yang akan digunakan
+            $bookImage = !empty($row['image']) ? 'images/' . htmlspecialchars($row['image']) : 'images/product-6-720x480.jpg';
+          ?>
+            <article class="style1">
+              <span class="image">
+                <img width="300px" height="260px" src="<?php echo $bookImage; ?>" alt="<?php echo htmlspecialchars($row['title']); ?>" />
+              </span>
+              <a href="product-details.php?id=<?php echo $row['id_book']; ?>">
+                <h2><?php echo htmlspecialchars($row['title']); ?></h2>
+                <p><strong>Rp. <?php echo number_format($row['price'], 0, ',', '.'); ?></strong></p>
+                <!-- Menampilkan total sold-out -->
+                <p>Total Terjual: <?php echo $row['total_sold']; ?> Buku</p>
+              </a>
+            </article>
+          <?php endwhile; ?>
         </section>
 
         <p class="text-center">
-          <a href="products.html">More Books &nbsp;<i class="fa fa-long-arrow-right"></i></a>
+          <a href="products.php">More Books &nbsp;<i class="fa fa-long-arrow-right"></i></a>
         </p>
 
         <br />
-
-        <h2 class="h2">Testimonials</h2>
-
-        <div class="row">
-          <div class="col-sm-6 text-center">
-            <p class="m-n">
-              <em>"Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                Sunt delectus mollitia, debitis architecto recusandae? Quidem
-                ipsa, quo, labore minima enim similique, delectus ullam non
-                laboriosam laborum distinctio repellat quas deserunt voluptas
-                reprehenderit dignissimos voluptatum deleniti saepe. Facere
-                expedita autem quos."</em>
-            </p>
-
-            <p><strong> - John Doe</strong></p>
-          </div>
-
-          <div class="col-sm-6 text-center">
-            <p class="m-n">
-              <em>"Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                Sunt delectus mollitia, debitis architecto recusandae? Quidem
-                ipsa, quo, labore minima enim similique, delectus ullam non
-                laboriosam laborum distinctio repellat quas deserunt voluptas
-                reprehenderit dignissimos voluptatum deleniti saepe. Facere
-                expedita autem quos."</em>
-            </p>
-
-            <p><strong>- John Doe</strong></p>
-          </div>
-        </div>
-
-        <p class="text-center">
-          <a href="testimonials.html">Read More &nbsp;<i class="fa fa-long-arrow-right"></i></a>
-        </p>
-
-        <br />
-
-        <h2 class="h2">Blog</h2>
-
-        <div class="row">
-          <div class="col-sm-4 text-center">
-            <img src="images/blog-1-720x480.jpg" class="img-fluid" alt="" />
-
-            <h2 class="m-n">
-              <a href="#">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</a>
-            </h2>
-
-            <p>John Doe &nbsp;|&nbsp; 12/06/2020 10:30</p>
-          </div>
-
-          <div class="col-sm-4 text-center">
-            <img src="images/blog-2-720x480.jpg" class="img-fluid" alt="" />
-
-            <h2 class="m-n">
-              <a href="#">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</a>
-            </h2>
-
-            <p>John Doe &nbsp;|&nbsp; 12/06/2020 10:30</p>
-          </div>
-
-          <div class="col-sm-4 text-center">
-            <img src="images/blog-3-720x480.jpg" class="img-fluid" alt="" />
-
-            <h2 class="m-n">
-              <a href="#">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</a>
-            </h2>
-
-            <p>John Doe &nbsp;|&nbsp; 12/06/2020 10:30</p>
-          </div>
-        </div>
-
-        <p class="text-center">
-          <a href="blog.html">Read More &nbsp;<i class="fa fa-long-arrow-right"></i></a>
-        </p>
       </div>
     </div>
 

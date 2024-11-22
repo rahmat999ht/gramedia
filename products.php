@@ -17,7 +17,7 @@
 					<div class="inner">
 
 						<!-- Logo -->
-							<a href="index.html" class="logo">
+							<a href="index.php" class="logo">
 									<span class="fa fa-book"></span> <span class="title">Gramedia</span>
 								</a>
 
@@ -35,24 +35,24 @@
 				<nav id="menu">
 					<h2>Menu</h2>
 					<ul>
-						<li><a href="index.html">Home</a></li>
+						<li><a href="index.php">Home</a></li>
 
-						<li><a href="products.html" class="active">Products</a></li>
+						<li><a href="products.php" class="active">Products</a></li>
 
-						<li><a href="checkout.html">Checkout</a></li>
+						<li><a href="checkout.php">Checkout</a></li>
 
 						<li>
 							<a href="#" class="dropdown-toggle">About</a>
 
 							<ul>
-								<li><a href="about.html">About Us</a></li>
-								<li><a href="blog.html">Blog</a></li>
-								<li><a href="testimonials.html">Testimonials</a></li>
-								<li><a href="terms.html">Terms</a></li>
+								<li><a href="about.php">About Us</a></li>
+								<li><a href="blog.php">Blog</a></li>
+								<li><a href="testimonials.php">Testimonials</a></li>
+								<li><a href="terms.php">Terms</a></li>
 							</ul>
 						</li>
 
-						<li><a href="contact.html">Contact Us</a></li>
+						<li><a href="contact.php">Contact Us</a></li>
 					</ul>
 				</nav>
 
@@ -71,7 +71,7 @@
 									<span class="image">
 										<img src="images/product-1-720x480.jpg" alt="" />
 									</span>
-									<a href="product-details.html">
+									<a href="product-details.php">
 										<h2>Lorem ipsum dolor sit amet, consectetur</h2>
 										
 										<p><del>$19.00</del> <strong>$19.00</strong></p>
@@ -83,7 +83,7 @@
 									<span class="image">
 										<img src="images/product-2-720x480.jpg" alt="" />
 									</span>
-									<a href="product-details.html">
+									<a href="product-details.php">
 										<h2>Lorem ipsum dolor sit amet, consectetur</h2>
 										
 										<p><del>$19.00</del> <strong>$19.00</strong></p>
@@ -95,7 +95,7 @@
 									<span class="image">
 										<img src="images/product-3-720x480.jpg" alt="" />
 									</span>
-									<a href="product-details.html">
+									<a href="product-details.php">
 										<h2>Lorem ipsum dolor sit amet, consectetur</h2>
 										
 										<p><del>$19.00</del> <strong>$19.00</strong></p>
@@ -108,7 +108,7 @@
 									<span class="image">
 										<img src="images/product-4-720x480.jpg" alt="" />
 									</span>
-									<a href="product-details.html">
+									<a href="product-details.php">
 										<h2>Lorem ipsum dolor sit amet, consectetur</h2>
 										
 										<p><del>$19.00</del> <strong>$19.00</strong></p>
@@ -121,7 +121,7 @@
 									<span class="image">
 										<img src="images/product-5-720x480.jpg" alt="" />
 									</span>
-									<a href="product-details.html">
+									<a href="product-details.php">
 										<h2>Lorem ipsum dolor sit amet, consectetur</h2>
 										
 										<p><del>$19.00</del> <strong>$19.00</strong></p>
@@ -134,7 +134,7 @@
 									<span class="image">
 										<img src="images/product-6-720x480.jpg" alt="" />
 									</span>
-									<a href="product-details.html">
+									<a href="product-details.php">
 										<h2>Lorem ipsum dolor sit amet, consectetur</h2>
 										
 										<p><del>$19.00</del> <strong>$19.00</strong></p>

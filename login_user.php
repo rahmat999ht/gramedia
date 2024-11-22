@@ -22,9 +22,9 @@ function login($username, $password)
         if ($ketemu > 0) {
             if ($b['email_verified'] == 1) {
                 session_start();
-                $_SESSION['user_id'] = $b['user_id'];
-                $_SESSION['user_username'] = $b['user_username'];
-                $_SESSION['user_email'] = $b['user_email'];
+                $_SESSION['user_id'] = $b['id_user'];
+                $_SESSION['user_username'] = $b['username'];
+                $_SESSION['user_email'] = $b['email'];
                 echo '<script>alert("Login successful!"); window.location.href="index.php";</script>';
             } else {
                 echo '<script>alert("Akun belum diverifikasi. Silakan cek email Anda untuk verifikasi."); window.location.href="index.php";</script>';
