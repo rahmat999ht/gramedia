@@ -1,179 +1,152 @@
+<?php
+session_start(); // Mulai session
+require_once("koneksi.php");
+error_reporting(0);
+?>
+
+
 <!DOCTYPE HTML>
 <html>
-	<head>
-		<title>Gramedia</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-	</head>
-	<body class="is-preload">
-		<!-- Wrapper -->
-			<div id="wrapper">
 
-				<!-- Header -->
-				<header id="header">
-					<div class="inner">
+<head>
+	<title>Gramedia</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="assets/css/main.css" />
+	<noscript>
+		<link rel="stylesheet" href="assets/css/noscript.css" />
+	</noscript>
+</head>
 
-						<!-- Logo -->
-							<a href="index.php" class="logo">
-									<span class="fa fa-book"></span> <span class="title">Gramedia</span>
-								</a>
+<body class="is-preload">
+	<!-- Wrapper -->
+	<div id="wrapper">
 
-						<!-- Nav -->
-							<nav>
-								<ul>
-									<li><a href="#menu">Menu</a></li>
-								</ul>
-							</nav>
+		<?php
+		include 'header.php';
+		include 'sidebar.php';
+		?>
 
-					</div>
-				</header>
+		<!-- Main -->
+		<div id="main">
+			<div class="inner">
+				<h1>Products</h1>
 
-			<!-- Menu -->
-				<nav id="menu">
-					<h2>Menu</h2>
-					<ul>
-						<li><a href="index.php">Home</a></li>
+				<div class="image main">
+					<img src="images/banner-image-6-1920x500.jpg" class="img-fluid" alt="" />
+				</div>
 
-						<li><a href="products.php" class="active">Products</a></li>
+				<!-- Products -->
+				<section class="tiles">
+					<article class="style1">
+						<span class="image">
+							<img src="images/product-1-720x480.jpg" alt="" />
+						</span>
+						<a href="product-details.php">
+							<h2>Lorem ipsum dolor sit amet, consectetur</h2>
 
-						<li><a href="checkout.php">Checkout</a></li>
+							<p><del>$19.00</del> <strong>$19.00</strong></p>
 
-						<li>
-							<a href="#" class="dropdown-toggle">About</a>
+							<p>Vestibulum id est eu felis vulputate hendrerit uspendisse dapibus turpis in </p>
+						</a>
+					</article>
+					<article class="style2">
+						<span class="image">
+							<img src="images/product-2-720x480.jpg" alt="" />
+						</span>
+						<a href="product-details.php">
+							<h2>Lorem ipsum dolor sit amet, consectetur</h2>
 
-							<ul>
-								<li><a href="about.php">About Us</a></li>
-								<li><a href="blog.php">Blog</a></li>
-								<li><a href="testimonials.php">Testimonials</a></li>
-								<li><a href="terms.php">Terms</a></li>
-							</ul>
-						</li>
+							<p><del>$19.00</del> <strong>$19.00</strong></p>
 
-						<li><a href="contact.php">Contact Us</a></li>
-					</ul>
-				</nav>
+							<p>Vestibulum id est eu felis vulputate hendrerit uspendisse dapibus turpis in </p>
+						</a>
+					</article>
+					<article class="style3">
+						<span class="image">
+							<img src="images/product-3-720x480.jpg" alt="" />
+						</span>
+						<a href="product-details.php">
+							<h2>Lorem ipsum dolor sit amet, consectetur</h2>
 
-				<!-- Main -->
-					<div id="main">
-						<div class="inner">
-							<h1>Products</h1>
+							<p><del>$19.00</del> <strong>$19.00</strong></p>
 
-							<div class="image main">
-								<img src="images/banner-image-6-1920x500.jpg" class="img-fluid" alt="" />
-							</div>
+							<p>Vestibulum id est eu felis vulputate hendrerit uspendisse dapibus turpis in </p>
+						</a>
+					</article>
 
-							<!-- Products -->
-							<section class="tiles">
-								<article class="style1">
-									<span class="image">
-										<img src="images/product-1-720x480.jpg" alt="" />
-									</span>
-									<a href="product-details.php">
-										<h2>Lorem ipsum dolor sit amet, consectetur</h2>
-										
-										<p><del>$19.00</del> <strong>$19.00</strong></p>
+					<article class="style4">
+						<span class="image">
+							<img src="images/product-4-720x480.jpg" alt="" />
+						</span>
+						<a href="product-details.php">
+							<h2>Lorem ipsum dolor sit amet, consectetur</h2>
 
-										<p>Vestibulum id est eu felis vulputate hendrerit uspendisse dapibus turpis in </p>
-									</a>
-								</article>
-								<article class="style2">
-									<span class="image">
-										<img src="images/product-2-720x480.jpg" alt="" />
-									</span>
-									<a href="product-details.php">
-										<h2>Lorem ipsum dolor sit amet, consectetur</h2>
-										
-										<p><del>$19.00</del> <strong>$19.00</strong></p>
+							<p><del>$19.00</del> <strong>$19.00</strong></p>
 
-										<p>Vestibulum id est eu felis vulputate hendrerit uspendisse dapibus turpis in </p>
-									</a>
-								</article>
-								<article class="style3">
-									<span class="image">
-										<img src="images/product-3-720x480.jpg" alt="" />
-									</span>
-									<a href="product-details.php">
-										<h2>Lorem ipsum dolor sit amet, consectetur</h2>
-										
-										<p><del>$19.00</del> <strong>$19.00</strong></p>
+							<p>Vestibulum id est eu felis vulputate hendrerit uspendisse dapibus turpis in </p>
+						</a>
+					</article>
 
-										<p>Vestibulum id est eu felis vulputate hendrerit uspendisse dapibus turpis in </p>
-									</a>
-								</article>
+					<article class="style5">
+						<span class="image">
+							<img src="images/product-5-720x480.jpg" alt="" />
+						</span>
+						<a href="product-details.php">
+							<h2>Lorem ipsum dolor sit amet, consectetur</h2>
 
-								<article class="style4">
-									<span class="image">
-										<img src="images/product-4-720x480.jpg" alt="" />
-									</span>
-									<a href="product-details.php">
-										<h2>Lorem ipsum dolor sit amet, consectetur</h2>
-										
-										<p><del>$19.00</del> <strong>$19.00</strong></p>
+							<p><del>$19.00</del> <strong>$19.00</strong></p>
 
-										<p>Vestibulum id est eu felis vulputate hendrerit uspendisse dapibus turpis in </p>
-									</a>
-								</article>
+							<p>Vestibulum id est eu felis vulputate hendrerit uspendisse dapibus turpis in </p>
+						</a>
+					</article>
 
-								<article class="style5">
-									<span class="image">
-										<img src="images/product-5-720x480.jpg" alt="" />
-									</span>
-									<a href="product-details.php">
-										<h2>Lorem ipsum dolor sit amet, consectetur</h2>
-										
-										<p><del>$19.00</del> <strong>$19.00</strong></p>
+					<article class="style6">
+						<span class="image">
+							<img src="images/product-6-720x480.jpg" alt="" />
+						</span>
+						<a href="product-details.php">
+							<h2>Lorem ipsum dolor sit amet, consectetur</h2>
 
-										<p>Vestibulum id est eu felis vulputate hendrerit uspendisse dapibus turpis in </p>
-									</a>
-								</article>
+							<p><del>$19.00</del> <strong>$19.00</strong></p>
 
-								<article class="style6">
-									<span class="image">
-										<img src="images/product-6-720x480.jpg" alt="" />
-									</span>
-									<a href="product-details.php">
-										<h2>Lorem ipsum dolor sit amet, consectetur</h2>
-										
-										<p><del>$19.00</del> <strong>$19.00</strong></p>
-
-										<p>Vestibulum id est eu felis vulputate hendrerit uspendisse dapibus turpis in </p>
-									</a>
-								</article>
-							</section>
-						</div>
-					</div>
-
-				<!-- Footer -->
-					<footer id="footer">
-						<div class="inner">
-							<section>
-								<ul class="icons">
-									<li><a href="#" class="icon style2 fa-twitter"><span class="label">Twitter</span></a></li>
-									<li><a href="#" class="icon style2 fa-facebook"><span class="label">Facebook</span></a></li>
-									<li><a href="#" class="icon style2 fa-instagram"><span class="label">Instagram</span></a></li>
-									<li><a href="#" class="icon style2 fa-linkedin"><span class="label">LinkedIn</span></a></li>
-								</ul>
-
-								&nbsp;
-							</section>
-
-							<ul class="copyright">
-								<li>Copyright © 2020 Company Name </li>
-								<li>Template by: <a href="https://www.phpjabbers.com/">PHPJabbers.com</a></li>
-							</ul>
-						</div>
-					</footer>
-
+							<p>Vestibulum id est eu felis vulputate hendrerit uspendisse dapibus turpis in </p>
+						</a>
+					</article>
+				</section>
 			</div>
+		</div>
 
-		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/bootstrap/js/bootstrap.bundle.min.js"></script>
-			<script src="assets/js/jquery.scrolly.min.js"></script>
-			<script src="assets/js/jquery.scrollex.min.js"></script>
-			<script src="assets/js/main.js"></script>
-	</body>
+		<!-- Footer -->
+		<footer id="footer">
+			<div class="inner">
+				<section>
+					<ul class="icons">
+						<li><a href="#" class="icon style2 fa-twitter"><span class="label">Twitter</span></a></li>
+						<li><a href="#" class="icon style2 fa-facebook"><span class="label">Facebook</span></a></li>
+						<li><a href="#" class="icon style2 fa-instagram"><span class="label">Instagram</span></a></li>
+						<li><a href="#" class="icon style2 fa-linkedin"><span class="label">LinkedIn</span></a></li>
+					</ul>
+
+					&nbsp;
+				</section>
+
+				<ul class="copyright">
+					<li>Copyright © 2020 Company Name </li>
+					<li>Template by: <a href="https://www.phpjabbers.com/">PHPJabbers.com</a></li>
+				</ul>
+			</div>
+		</footer>
+
+	</div>
+
+	<!-- Scripts -->
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="assets/js/jquery.scrolly.min.js"></script>
+	<script src="assets/js/jquery.scrollex.min.js"></script>
+	<script src="assets/js/main.js"></script>
+</body>
+
 </html>

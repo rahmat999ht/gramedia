@@ -56,49 +56,11 @@ $total_price = 0;
 	<!-- Wrapper -->
 	<div id="wrapper">
 
-		<!-- Header -->
-		<header id="header">
-			<div class="inner">
 
-				<!-- Logo -->
-				<a href="index.php" class="logo">
-					<span class="fa fa-book"></span> <span class="title">Gramedia</span>
-				</a>
-
-				<!-- Nav -->
-				<nav>
-					<ul>
-						<li><a href="#menu">Menu</a></li>
-					</ul>
-				</nav>
-
-			</div>
-		</header>
-
-		<!-- Menu -->
-		<nav id="menu">
-			<h2>Menu</h2>
-			<ul>
-				<li><a href="index.php">Home</a></li>
-
-				<li><a href="products.php">Products</a></li>
-
-				<li><a href="checkout.php" class="active">Checkout</a></li>
-
-				<li>
-					<a href="#" class="dropdown-toggle">About</a>
-
-					<ul>
-						<li><a href="about.php">About Us</a></li>
-						<li><a href="blog.php">Blog</a></li>
-						<li><a href="testimonials.php">Testimonials</a></li>
-						<li><a href="terms.php">Terms</a></li>
-					</ul>
-				</li>
-
-				<li><a href="contact.php">Contact Us</a></li>
-			</ul>
-		</nav>
+		<?php
+		include 'header.php';
+		include 'sidebar.php';
+		?>
 
 		<!-- Main -->
 		<div id="main">

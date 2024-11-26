@@ -26,24 +26,46 @@ $books_result = mysqli_query($koneksi, $books_query);
 $books_data = mysqli_fetch_assoc($books_result);
 $total_books_in_stock = $books_data['total_books_in_stock'] ?? 0;
 
-// Menyusun query untuk mendapatkan transaksi terlaris hari ini
+
+// Tangkap filter dari URL (default: Today)
+$filter = $_GET['filter'] ?? 'today';
+
+// Tentukan rentang waktu berdasarkan filter
+$filter_condition = "DATE(order_date) = CURDATE()"; // Default: Today
+if ($filter === 'this_month') {
+  $filter_condition = "MONTH(order_date) = MONTH(CURDATE()) AND YEAR(order_date) = YEAR(CURDATE())";
+} elseif ($filter === 'this_year') {
+  $filter_condition = "YEAR(order_date) = YEAR(CURDATE())";
+}
+
+// Query total orders berdasarkan filter
+$orders_query = "SELECT COUNT(*) AS total_orders FROM orders WHERE $filter_condition";
+$orders_result = mysqli_query($koneksi, $orders_query);
+$orders_data = mysqli_fetch_assoc($orders_result);
+$total_orders = $orders_data['total_orders'] ?? 0;
+
+// Query top selling products berdasarkan filter
 $query_top_selling_today = "
     SELECT 
-    b.image, 
-    b.title AS product_name, 
-    b.price, 
-    SUM(od.quantity) AS sold,
-    (b.price * SUM(od.quantity)) AS revenue
-FROM 
-    books b
-JOIN 
-    order_details od ON b.id_book = od.id_book
-JOIN 
-    orders o ON od.id_order = o.id_order
-GROUP BY 
-    b.id_book
-ORDER BY 
-    revenue DESC LIMIT 5"; // Ambil 5 produk terlaris hari ini
+        b.image, 
+        b.title AS product_name, 
+        b.price, 
+        SUM(od.quantity) AS sold,
+        (b.price * SUM(od.quantity)) AS revenue,
+        o.order_date
+    FROM 
+        books b
+    JOIN 
+        order_details od ON b.id_book = od.id_book
+    JOIN 
+        orders o ON od.id_order = o.id_order
+    WHERE 
+        $filter_condition
+    GROUP BY 
+        b.id_book, o.order_date
+    ORDER BY 
+        revenue DESC 
+    LIMIT 5";
 
 $result_top_selling_today = mysqli_query($koneksi, $query_top_selling_today);
 
@@ -180,8 +202,20 @@ $result_top_selling_today = mysqli_query($koneksi, $query_top_selling_today);
           <!-- Top Selling -->
           <div class="col-12">
             <div class="card top-selling overflow-auto">
+              <div class="filter">
+                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                  <li class="dropdown-header text-start">
+                    <h6>Filter</h6>
+                  </li>
+                  <li><a class="dropdown-item" href="?filter=today">Today</a></li>
+                  <li><a class="dropdown-item" href="?filter=this_month">This Month</a></li>
+                  <li><a class="dropdown-item" href="?filter=this_year">This Year</a></li>
+                </ul>
+              </div>
+
               <div class="card-body pb-0">
-                <h5 class="card-title">Transaksi Terlaris</h5>
+                <h5 class="card-title">Transaksi Terlaris <span>| <?php echo ucfirst(str_replace('_', ' ', $filter)); ?></span></h5>
 
                 <table class="table table-borderless">
                   <thead>
@@ -191,6 +225,7 @@ $result_top_selling_today = mysqli_query($koneksi, $query_top_selling_today);
                       <th scope="col">Price</th>
                       <th scope="col">Sold</th>
                       <th scope="col">Revenue</th>
+                      <th scope="col">Date</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -209,8 +244,20 @@ $result_top_selling_today = mysqli_query($koneksi, $query_top_selling_today);
                           <td>Rp " . number_format($row['price'], 0, ',', '.') . "</td>
                           <td>{$row['sold']}</td>
                           <td>Rp " . number_format($row['revenue'], 0, ',', '.') . "</td>
+                          <td>" . date('d M Y', strtotime($row['order_date'])) . "</td>
                         </tr>";
                       }
+                    } else {
+                      // Jika tidak ada data
+                      echo "<tr>
+                        <td colspan='6' class='text-center'>
+                          <div class='card'>
+                            <div class='card-body'>
+                              <h5 class='card-title'>Tidak ada data untuk ditampilkan</h5>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>";
                     }
                     ?>
                   </tbody>
