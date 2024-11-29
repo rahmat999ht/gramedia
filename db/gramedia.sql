@@ -59,6 +59,7 @@ CREATE TABLE `orders` (
   `id_order` INT(11) NOT NULL AUTO_INCREMENT,
   `id_user` INT(11) NOT NULL,
   `order_date` DATETIME NOT NULL,
+  `status` ENUM('pending', 'processing', 'completed', 'cancelled') NOT NULL DEFAULT 'pending',
   PRIMARY KEY (`id_order`),
   FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -69,6 +70,13 @@ CREATE TABLE `order_details` (
   `id_order` INT(11) NOT NULL,
   `id_book` INT(11) NOT NULL,
   `quantity` INT(11) NOT NULL,
+  `name` VARCHAR(255) NOT NULL,
+  `phone` VARCHAR(20) NOT NULL,
+  `address` TEXT NOT NULL,
+  `city` VARCHAR(100) NOT NULL,
+  `state` VARCHAR(100) NOT NULL,
+  `zip` VARCHAR(20) NOT NULL;
+
   PRIMARY KEY (`id_detail`),
   FOREIGN KEY (`id_order`) REFERENCES `orders` (`id_order`) ON DELETE CASCADE,
   FOREIGN KEY (`id_book`) REFERENCES `books` (`id_book`) ON DELETE CASCADE
