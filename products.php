@@ -2,6 +2,25 @@
 session_start(); // Mulai session
 require_once("koneksi.php");
 error_reporting(0);
+
+
+// Query untuk mengambil data buku dari database
+$query = "SELECT * FROM books"; // Sesuaikan nama tabel dan field sesuai dengan yang ada di database
+$result = $koneksi->query($query);
+
+// Ambil kategori buku dari database
+$query_categories = "SELECT * FROM categories";
+$result_categories = $koneksi->query($query_categories);
+
+/// Menentukan kategori yang dipilih (jika ada)
+$category_id = isset($_GET['category_id']) ? (int)$_GET['category_id'] : 0;
+
+// Query untuk mengambil buku berdasarkan kategori yang dipilih
+$query_books = "SELECT * FROM books";
+if ($category_id > 0) {
+	$query_books .= " WHERE id_category = $category_id"; // Filter berdasarkan kategori
+}
+$result_books = $koneksi->query($query_books);
 ?>
 
 
@@ -17,6 +36,23 @@ error_reporting(0);
 	<noscript>
 		<link rel="stylesheet" href="assets/css/noscript.css" />
 	</noscript>
+	<!-- Tambahkan CSS di dalam file CSS Anda -->
+	<style>
+		.button-default {
+			background-color: #f0f0f0;
+			color: black;
+			border: 1px solid #ccc;
+			padding: 10px 20px;
+			cursor: pointer;
+		}
+
+		.button-selected {
+			background-color: #FFB6C1;
+			color: white;
+			border: 1px solid #FFB6C1;
+		}
+	</style>
+
 </head>
 
 <body class="is-preload">
@@ -28,6 +64,7 @@ error_reporting(0);
 		include 'sidebar.php';
 		?>
 
+
 		<!-- Main -->
 		<div id="main">
 			<div class="inner">
@@ -37,83 +74,61 @@ error_reporting(0);
 					<img src="images/banner-image-6-1920x500.jpg" class="img-fluid" alt="" />
 				</div>
 
-				<!-- Products -->
+				<h2>Categories</h2>
+				<div class="categories">
+					<!-- Tombol All untuk menampilkan semua buku -->
+					<button id="all-button" class="button-default" type="button" onclick="window.location.href='products.php?category_id=0'">All</button>
+
+					<?php
+					// Menampilkan kategori buku
+					while ($row_category = $result_categories->fetch_assoc()) {
+						$category_id = $row_category['id_category'];
+					?>
+						<button id="category-<?php echo $category_id; ?>" class="button-default" type="button" onclick="window.location.href='products.php?category_id=<?php echo $category_id; ?>'">
+							<?php echo htmlspecialchars($row_category['name']); ?>
+						</button>
+					<?php
+					}
+					?>
+				</div>
+
+				<script>
+					// Ambil parameter category_id dari URL
+					const urlParams = new URLSearchParams(window.location.search);
+					const categoryId = urlParams.get('category_id');
+
+					// Jika category_id ditemukan, beri kelas 'button-selected' pada tombol yang sesuai
+					if (categoryId) {
+						if (categoryId == 0) {
+							document.getElementById('all-button').classList.add('button-selected');
+						} else {
+							document.getElementById('category-' + categoryId).classList.add('button-selected');
+						}
+					}
+				</script>
+
+				<h2></h2>
+
+				<!-- Produk Buku Berdasarkan Kategori -->
 				<section class="tiles">
-					<article class="style1">
-						<span class="image">
-							<img src="images/product-1-720x480.jpg" alt="" />
-						</span>
-						<a href="product-details.php">
-							<h2>Lorem ipsum dolor sit amet, consectetur</h2>
-
-							<p><del>$19.00</del> <strong>$19.00</strong></p>
-
-							<p>Vestibulum id est eu felis vulputate hendrerit uspendisse dapibus turpis in </p>
-						</a>
-					</article>
-					<article class="style2">
-						<span class="image">
-							<img src="images/product-2-720x480.jpg" alt="" />
-						</span>
-						<a href="product-details.php">
-							<h2>Lorem ipsum dolor sit amet, consectetur</h2>
-
-							<p><del>$19.00</del> <strong>$19.00</strong></p>
-
-							<p>Vestibulum id est eu felis vulputate hendrerit uspendisse dapibus turpis in </p>
-						</a>
-					</article>
-					<article class="style3">
-						<span class="image">
-							<img src="images/product-3-720x480.jpg" alt="" />
-						</span>
-						<a href="product-details.php">
-							<h2>Lorem ipsum dolor sit amet, consectetur</h2>
-
-							<p><del>$19.00</del> <strong>$19.00</strong></p>
-
-							<p>Vestibulum id est eu felis vulputate hendrerit uspendisse dapibus turpis in </p>
-						</a>
-					</article>
-
-					<article class="style4">
-						<span class="image">
-							<img src="images/product-4-720x480.jpg" alt="" />
-						</span>
-						<a href="product-details.php">
-							<h2>Lorem ipsum dolor sit amet, consectetur</h2>
-
-							<p><del>$19.00</del> <strong>$19.00</strong></p>
-
-							<p>Vestibulum id est eu felis vulputate hendrerit uspendisse dapibus turpis in </p>
-						</a>
-					</article>
-
-					<article class="style5">
-						<span class="image">
-							<img src="images/product-5-720x480.jpg" alt="" />
-						</span>
-						<a href="product-details.php">
-							<h2>Lorem ipsum dolor sit amet, consectetur</h2>
-
-							<p><del>$19.00</del> <strong>$19.00</strong></p>
-
-							<p>Vestibulum id est eu felis vulputate hendrerit uspendisse dapibus turpis in </p>
-						</a>
-					</article>
-
-					<article class="style6">
-						<span class="image">
-							<img src="images/product-6-720x480.jpg" alt="" />
-						</span>
-						<a href="product-details.php">
-							<h2>Lorem ipsum dolor sit amet, consectetur</h2>
-
-							<p><del>$19.00</del> <strong>$19.00</strong></p>
-
-							<p>Vestibulum id est eu felis vulputate hendrerit uspendisse dapibus turpis in </p>
-						</a>
-					</article>
+					<?php
+					// Menampilkan buku yang sesuai dengan kategori yang dipilih
+					while ($row_book = $result_books->fetch_assoc()) {
+						$bookImage = !empty($row_book['image']) ? 'images/' . htmlspecialchars($row_book['image']) : 'images/product-6-720x480.jpg';
+					?>
+						<article class="style1">
+							<span class="image">
+								<img width="300px" height="260px" src="<?php echo $bookImage; ?>" alt="<?php echo htmlspecialchars($row_book['title']); ?>" />
+							</span>
+							<a href="product-details.php?id=<?php echo $row_book['id_book']; ?>">
+								<h2><?php echo htmlspecialchars($row_book['title']); ?></h2>
+								<p><del>$<?php echo number_format($row_book['price'], 2, '.', ','); ?></del> <strong>$<?php echo number_format($row_book['price'], 2, '.', ','); ?></strong></p>
+								<p><?php echo htmlspecialchars($row_book['description']); ?></p>
+							</a>
+						</article>
+					<?php
+					}
+					?>
 				</section>
 			</div>
 		</div>
