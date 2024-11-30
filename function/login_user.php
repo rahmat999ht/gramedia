@@ -1,6 +1,6 @@
 <?php
 
-include_once "koneksi.php";
+include_once "../koneksi.php";
 
 function login($username, $password)
 {
@@ -25,15 +25,15 @@ function login($username, $password)
                 $_SESSION['user_id'] = $b['id_user'];
                 $_SESSION['user_username'] = $b['username'];
                 $_SESSION['user_email'] = $b['email'];
-                echo '<script>alert("Login successful!"); window.location.href="index.php";</script>';
+                echo '<script>alert("Login successful!"); window.location.href="../index.php";</script>';
             } else {
-                echo '<script>alert("Akun belum diverifikasi. Silakan cek email Anda untuk verifikasi."); window.location.href="index.php";</script>';
+                echo '<script>alert("Akun belum diverifikasi. Silakan cek email Anda untuk verifikasi."); window.location.href="../index.php";</script>';
             }
         } else {
-            echo '<script>alert("Username/Password salah atau akun Anda belum aktif."); window.location.href="index.php";</script>';
+            echo '<script>alert("Username/Password salah atau akun Anda belum aktif."); window.location.href="../index.php";</script>';
         }
     } else {
-        echo '<script>alert("Query Error: ' . mysqli_error($koneksi) . '"); window.location.href="index.php";</script>';
+        echo '<script>alert("Query Error: ' . mysqli_error($koneksi) . '"); window.location.href="../index.php";</script>';
     }
 }
 

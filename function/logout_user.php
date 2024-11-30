@@ -9,7 +9,7 @@ function logout()
     unset($_SESSION['user_email']);
 
     session_destroy(); // Menghancurkan sesi
-    header("Location: index.php"); // Mengarahkan pengguna ke halaman utama
+    header("Location: ../index.php"); // Mengarahkan pengguna ke halaman utama
     exit();
 }
 

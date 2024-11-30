@@ -14,7 +14,7 @@
 
         <!-- <li><a href="contact.php">Contact Us</a></li> -->
         <?php if (isset($_SESSION['user_id'])): ?>
-            <li><a href="logout_user.php">Log-Out</a></li>
+            <li><a href="function/logout_user.php">Log-Out</a></li>
         <?php endif; ?>
     </ul>
 </nav>

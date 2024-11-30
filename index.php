@@ -264,7 +264,7 @@ if (!$result_buku_terlaris) {
           </button>
         </div>
         <div class="modal-body">
-          <form method="post" action="login_user.php">
+          <form method="post" action="function/login_user.php">
             <div class="form-group">
               <label for="username">Username</label>
               <input
@@ -307,7 +307,7 @@ if (!$result_buku_terlaris) {
           </button>
         </div>
         <div class="modal-body">
-          <form method="post" action="register_user.php"> <!-- Ganti dengan path ke script register Anda -->
+          <form method="post" action="function/register_user.php"> <!-- Ganti dengan path ke script register Anda -->
             <div class="form-group">
               <label for="email">Email</label>
               <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required />

@@ -1,12 +1,12 @@
 <?php
 session_start();
-require_once("koneksi.php"); // Menghubungkan ke database
+require_once("../koneksi.php"); // Menghubungkan ke database
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
 // Load Composer's autoloader
-require 'vendor/autoload.php';
+require '../vendor/autoload.php';
 
 function register($email, $username, $password, $confirmPassword)
 {
@@ -14,7 +14,7 @@ function register($email, $username, $password, $confirmPassword)
 
     // Validasi password
     if ($password !== $confirmPassword) {
-        echo '<script>alert("Password tidak sama."); window.location.href="index.php";</script>';
+        echo '<script>alert("Password tidak sama."); window.location.href="../index.php";</script>';
         return;
     }
 
@@ -28,7 +28,7 @@ function register($email, $username, $password, $confirmPassword)
     $result = mysqli_stmt_get_result($stmt);
 
     if (mysqli_num_rows($result) > 0) {
-        echo '<script>alert("Username atau email sudah terdaftar."); window.location.href="index.php";</script>';
+        echo '<script>alert("Username atau email sudah terdaftar."); window.location.href="../index.php";</script>';
         return;
     }
 
@@ -55,7 +55,7 @@ function register($email, $username, $password, $confirmPassword)
         // Isi email
         $mail->isHTML(true);
         $mail->Subject = 'Email Verification Gramedia';
-        $verificationLink = "http://localhost:8000/verify_email.php?token=" . $verificationToken;
+        $verificationLink = "http://localhost:8000/function/verify_email.php?token=" . $verificationToken;
         $mail->Body = "Hi $username, please verify your email by clicking the link: <a href='$verificationLink'>$verificationLink</a>";
 
         // Kirim email
@@ -66,17 +66,17 @@ function register($email, $username, $password, $confirmPassword)
             mysqli_stmt_bind_param($insertStmt, "ssss", $username, $hashedPassword, $email, $verificationToken);
 
             if (mysqli_stmt_execute($insertStmt)) {
-                echo '<script>alert("Registration successful! Please check your email for verification."); window.location.href="index.php";</script>';
+                echo '<script>alert("Registration successful! Please check your email for verification."); window.location.href="../index.php";</script>';
                 exit();
             } else {
-                echo '<script>alert("Terjadi kesalahan saat menyimpan data: ' . mysqli_error($koneksi) . '"); window.location.href="index.php";</script>';
+                echo '<script>alert("Terjadi kesalahan saat menyimpan data: ' . mysqli_error($koneksi) . '"); window.location.href="../index.php";</script>';
                 return;
             }
         } else {
-            echo '<script>alert("Failed to send verification email."); window.location.href="index.php";</script>';
+            echo '<script>alert("Failed to send verification email."); window.location.href="../index.php";</script>';
         }
     } catch (Exception $e) {
-        echo '<script>alert("Mailer Error: ' . $mail->ErrorInfo . '"); window.location.href="index.php";</script>';
+        echo '<script>alert("Mailer Error: ' . $mail->ErrorInfo . '"); window.location.href="../index.php";</script>';
     }
 }
 

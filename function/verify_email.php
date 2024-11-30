@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once("koneksi.php"); // Menghubungkan ke database
+require_once("../koneksi.php"); // Menghubungkan ke database
 
 if (isset($_GET['token'])) {
     $token = $_GET['token'];
@@ -17,13 +17,13 @@ if (isset($_GET['token'])) {
         mysqli_stmt_bind_param($updateStmt, "s", $token);
 
         if (mysqli_stmt_execute($updateStmt)) {
-            echo '<script>alert("Email berhasil diverifikasi. Anda dapat login sekarang."); window.location.href="index.php";</script>';
+            echo '<script>alert("Email berhasil diverifikasi. Anda dapat login sekarang."); window.location.href="../index.php";</script>';
         } else {
-            echo '<script>alert("Gagal memverifikasi email."); window.location.href="index.php";</script>';
+            echo '<script>alert("Gagal memverifikasi email."); window.location.href="../index.php";</script>';
         }
     } else {
-        echo '<script>alert("Token verifikasi tidak valid atau sudah digunakan."); window.location.href="index.php";</script>';
+        echo '<script>alert("Token verifikasi tidak valid atau sudah digunakan."); window.location.href="../index.php";</script>';
     }
 } else {
-    echo '<script>alert("Token verifikasi tidak ditemukan."); window.location.href="index.php";</script>';
+    echo '<script>alert("Token verifikasi tidak ditemukan."); window.location.href="../index.php";</script>';
 }
