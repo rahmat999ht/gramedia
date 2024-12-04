@@ -11,7 +11,7 @@ CREATE TABLE `users` (
   `email` VARCHAR(100) NOT NULL,
   `email_verified` TINYINT(1) DEFAULT 0,
   `verification_token` VARCHAR(255),
-  `isActive` TINYINT(1) DEFAULT 1;
+  `isActive` TINYINT(1) DEFAULT 1,
   PRIMARY KEY (`id_user`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -75,8 +75,7 @@ CREATE TABLE `order_details` (
   `address` TEXT NOT NULL,
   `city` VARCHAR(100) NOT NULL,
   `state` VARCHAR(100) NOT NULL,
-  `zip` VARCHAR(20) NOT NULL;
-
+  `zip` VARCHAR(20) NOT NULL,
   PRIMARY KEY (`id_detail`),
   FOREIGN KEY (`id_order`) REFERENCES `orders` (`id_order`) ON DELETE CASCADE,
   FOREIGN KEY (`id_book`) REFERENCES `books` (`id_book`) ON DELETE CASCADE
@@ -101,105 +100,70 @@ CREATE TABLE `admin` (
   PRIMARY KEY (`id_admin`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Data untuk tabel admin
-INSERT INTO `admin` (`username`, `password`, `role`) VALUES
-('admin1', '21232f297a57a5a743894a0e4a801fc3', 'admin'), -- password hash untuk 'admin'
-('kasir01', '5f4dcc3b5aa765d61d8327deb882cf99', 'kasir'), -- password hash untuk 'password'
-('atasan01', 'e99a18c428cb38d5f260853678922e03', 'atasan'); -- password hash untuk 'abc123'
+-- Insert data ke tabel users dengan password MD5
+INSERT INTO `users` (`username`, `password`, `email`, `email_verified`, `verification_token`, `isActive`) VALUES
+('john_doe', MD5('password123'), 'john.doe@example.com', 1, NULL, 1),
+('jane_doe', MD5('password456'), 'jane.doe@example.com', 0, 'abc123', 1),
+('mark_twain', MD5('password789'), 'mark.twain@example.com', 1, NULL, 1),
+('lisa_smith', MD5('password101'), 'lisa.smith@example.com', 0, 'def456', 1),
+('tom_clark', MD5('password111'), 'tom.clark@example.com', 1, NULL, 0),
+('emma_watson', MD5('password222'), 'emma.watson@example.com', 0, 'ghi789', 1);
 
--- Data untuk tabel users
-INSERT INTO `users` (`username`, `password`, `email`) VALUES
-('user', '827ccb0eea8a706c4c34a16891f84e7b', 'user@example.com'),
-('john_doe', 'e99a18c428cb38d5f260853678922e03', 'john_doe@example.com'), -- password hash untuk 'abc123'
-('jane_smith', '1f3870be274f6c49b3e31a0c6728957f', 'jane_smith@example.com'); -- password hash untuk 'mypassword'
-
--- Data untuk tabel categories
+-- Insert data ke tabel categories
 INSERT INTO `categories` (`name`) VALUES
-('Fiction'),
-('Non-Fiction'),
-('Science'),
-('Children'),
-('Self-Help');
+('Fiction'), ('Non-Fiction'), ('Science'), ('Biography'), ('Mystery'), ('Fantasy');
 
--- Data untuk tabel books
-INSERT INTO `books` (`title`, `author`, `price`, `stock`, `id_category`) VALUES
-('The Great Gatsby', 'F. Scott Fitzgerald', 75000, 10, 1),
-('A Brief History of Time', 'Stephen Hawking', 120000, 5, 3),
-('To Kill a Mockingbird', 'Harper Lee', 85000, 8, 1),
-('The Power of Habit', 'Charles Duhigg', 100000, 15, 5),
-('The Very Hungry Caterpillar', 'Eric Carle', 50000, 20, 4);
+-- Insert data ke tabel books
+INSERT INTO `books` (`image`, `title`, `author`, `price`, `stock`, `id_category`) VALUES
+('img1.jpg', 'The Great Adventure', 'John Doe', 99.99, 50, 1),
+('img2.jpg', 'Science for Beginners', 'Jane Doe', 49.99, 30, 3),
+('img3.jpg', 'Life of Einstein', 'Mark Twain', 59.99, 20, 4),
+('img4.jpg', 'Mystery of the Lost City', 'Lisa Smith', 79.99, 15, 5),
+('img5.jpg', 'The Magical Realm', 'Emma Watson', 89.99, 40, 6),
+('img6.jpg', 'Introduction to AI', 'Tom Clark', 69.99, 25, 2);
 
--- Data untuk tabel cart
+-- Insert data ke tabel cart
 INSERT INTO `cart` (`id_user`) VALUES
-(1), -- John Doe's cart
-(2); -- Jane Smith's cart
+(1), (2), (3), (4), (5), (6);
 
--- Data untuk tabel cart_items
+-- Insert data ke tabel cart_items
 INSERT INTO `cart_items` (`id_cart`, `id_book`, `quantity`) VALUES
-(1, 1, 2), -- John Doe added 2 copies of 'The Great Gatsby'
-(1, 3, 1), -- John Doe added 1 copy of 'To Kill a Mockingbird'
-(2, 2, 1), -- Jane Smith added 1 copy of 'A Brief History of Time'
-(2, 4, 1); -- Jane Smith added 1 copy of 'The Power of Habit'
+(1, 1, 2), (2, 3, 1), (3, 5, 3), (4, 6, 1), (5, 2, 4), (6, 4, 2);
 
--- Data untuk tabel orders
-INSERT INTO `orders` (`id_user`, `order_date`) VALUES
-(1, '2024-10-01 10:15:00'), -- John Doe's order
-(2, '2024-10-02 15:30:00'); -- Jane Smith's order
+-- Insert data ke tabel orders
+INSERT INTO `orders` (`id_user`, `order_date`, `status`) VALUES
+(1, '2024-12-01 12:00:00', 'pending'),
+(2, '2024-12-02 13:00:00', 'processing'),
+(3, '2024-12-03 14:00:00', 'completed'),
+(4, '2024-12-04 15:00:00', 'cancelled'),
+(5, '2024-12-05 16:00:00', 'completed'),
+(6, '2024-12-06 17:00:00', 'pending');
 
--- Data untuk tabel order_details
-INSERT INTO `order_details` (`id_order`, `id_book`, `quantity`) VALUES
-(1, 1, 2), -- John Doe ordered 2 copies of 'The Great Gatsby'
-(1, 3, 1), -- John Doe ordered 1 copy of 'To Kill a Mockingbird'
-(2, 2, 1), -- Jane Smith ordered 1 copy of 'A Brief History of Time'
-(2, 4, 1); -- Jane Smith ordered 1 copy of 'The Power of Habit'
+-- Insert data ke tabel order_details
+INSERT INTO `order_details` (`id_order`, `id_book`, `quantity`, `name`, `phone`, `address`, `city`, `state`, `zip`) VALUES
+(1, 1, 2, 'John Doe', '123456789', '123 Main St', 'New York', 'NY', '10001'),
+(2, 3, 1, 'Jane Doe', '987654321', '456 Oak St', 'Los Angeles', 'CA', '90001'),
+(3, 5, 3, 'Mark Twain', '111222333', '789 Pine St', 'Chicago', 'IL', '60601'),
+(4, 6, 1, 'Lisa Smith', '444555666', '101 Maple St', 'Houston', 'TX', '77001'),
+(5, 2, 4, 'Tom Clark', '777888999', '202 Birch St', 'Phoenix', 'AZ', '85001'),
+(6, 4, 2, 'Emma Watson', '000111222', '303 Cedar St', 'Philadelphia', 'PA', '19019');
 
--- Data untuk tabel invoices
+-- Insert data ke tabel invoices
 INSERT INTO `invoices` (`id_order`, `invoice_date`, `total_amount`) VALUES
-(1, '2024-10-01 10:20:00', 235000), -- Invoice for John Doe's order
-(2, '2024-10-02 15:35:00', 220000); -- Invoice for Jane Smith's order
+(1, '2024-12-01 13:00:00', 199.98),
+(2, '2024-12-02 14:00:00', 59.99),
+(3, '2024-12-03 15:00:00', 269.97),
+(4, '2024-12-04 16:00:00', 69.99),
+(5, '2024-12-05 17:00:00', 199.96),
+(6, '2024-12-06 18:00:00', 159.98);
 
--- Data untuk tabel cart
-INSERT INTO cart (id_user) VALUES
-(1), -- John Doe's cart
-(2), -- Jane Smith's cart
-(3); -- Bob Martin's cart
-
--- Data untuk tabel cart_items
-INSERT INTO cart_items (id_cart, id_book, quantity) VALUES
-(1, 1, 2), -- John Doe added 2 copies of 'The Great Gatsby'
-(1, 3, 1), -- John Doe added 1 copy of 'To Kill a Mockingbird'
-(2, 2, 1), -- Jane Smith added 1 copy of 'A Brief History of Time'
-(2, 4, 1), -- Jane Smith added 1 copy of 'The Power of Habit'
-(3, 1, 1), -- Bob Martin added 1 copy of 'The Great Gatsby'
-(3, 4, 2), -- Bob Martin added 2 copies of 'The Power of Habit'
-(3, 5, 3); -- Bob Martin added 3 copies of 'The Very Hungry Caterpillar'
-
--- Data untuk tabel orders
-INSERT INTO orders (id_user, order_date) VALUES
-(1, '2024-10-01 10:15:00'), -- John Doe's first order
-(1, '2024-10-05 14:25:00'), -- John Doe's second order
-(2, '2024-10-02 15:30:00'), -- Jane Smith's first order
-(3, '2024-10-03 09:45:00'), -- Bob Martin's first order
-(3, '2024-10-06 16:05:00'); -- Bob Martin's second order
-
--- Data untuk tabel order_details
-INSERT INTO order_details (id_order, id_book, quantity) VALUES
-(1, 1, 2), -- John Doe ordered 2 copies of 'The Great Gatsby'
-(1, 3, 1), -- John Doe ordered 1 copy of 'To Kill a Mockingbird'
-(2, 3, 1), -- John Doe ordered 1 copy of 'To Kill a Mockingbird' in second order
-(2, 5, 1), -- John Doe ordered 1 copy of 'The Very Hungry Caterpillar'
-(3, 1, 1), -- Bob Martin ordered 1 copy of 'The Great Gatsby'
-(3, 4, 2), -- Bob Martin ordered 2 copies of 'The Power of Habit'
-(3, 5, 3), -- Bob Martin ordered 3 copies of 'The Very Hungry Caterpillar'
-(4, 2, 1), -- Jane Smith ordered 1 copy of 'A Brief History of Time'
-(4, 4, 1); -- Jane Smith ordered 1 copy of 'The Power of Habit'
-
--- Data untuk tabel invoices
-INSERT INTO invoices (id_order, invoice_date, total_amount) VALUES
-(1, '2024-10-01 10:20:00', 235000), -- Invoice for John Doe's first order
-(2, '2024-10-05 14:30:00', 200000), -- Invoice for John Doe's second order
-(3, '2024-10-02 15:35:00', 220000), -- Invoice for Jane Smith's order
-(4, '2024-10-03 09:50:00', 210000), -- Invoice for Bob Martin's first order
-(5, '2024-10-06 16:10:00', 250000); -- Invoice for Bob Martin's second order
+-- Insert data ke tabel admin dengan password MD5
+INSERT INTO `admin` (`username`, `password`, `role`) VALUES
+('admin_master', MD5('adminpass123'), 'admin'),
+('kasir_jane', MD5('kasirpass456'), 'kasir'),
+('supervisor_mark', MD5('superpass789'), 'atasan'),
+('admin_john', MD5('adminpass101'), 'admin'),
+('kasir_emma', MD5('kasirpass111'), 'kasir'),
+('supervisor_tom', MD5('superpass222'), 'atasan');
 
 COMMIT;
