@@ -113,12 +113,16 @@ if (!$result_buku_terlaris) {
       <div class="inner">
         <!-- About Us -->
         <header id="inner">
-          <h1>Find your new book!</h1>
+          <h1>Temukan Buku Baru Anda di Gramedia!</h1>
           <p>
-            Etiam quis viverra lorem, in semper lorem. Sed nisl arcu euismod
-            sit amet nisi euismod sed cursus arcu elementum ipsum arcu vivamus
-            quis venenatis orci lorem ipsum et magna feugiat veroeros aliquam.
-            Lorem ipsum dolor sit amet nullam dolore.
+            Jelajahi dunia penuh inspirasi dengan koleksi buku terbaru dari Gramedia.
+            Dari novel yang menggugah hati hingga buku panduan yang memperkaya wawasan, semuanya ada di sini untuk Anda.
+            <br><br>
+            📚 <strong>Temukan cerita favorit Anda</strong><br>
+            🌟 <strong>Beragam genre untuk semua selera</strong><br>
+            <!-- 🎉 <strong>Promo menarik menanti Anda</strong><br><br> -->
+            🎉 <strong>Gramedia, Sahabat Literasi Anda.</strong><br>
+            Ayo, mulai petualangan membaca Anda hari ini!
           </p>
         </header>
 
