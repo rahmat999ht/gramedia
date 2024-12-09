@@ -122,7 +122,7 @@ $result_books = $koneksi->query($query_books);
 							</span>
 							<a href="product-details.php?id=<?php echo $row_book['id_book']; ?>">
 								<h2><?php echo htmlspecialchars($row_book['title']); ?></h2>
-								<p><del>$<?php echo number_format($row_book['price'], 2, '.', ','); ?></del> <strong>$<?php echo number_format($row_book['price'], 2, '.', ','); ?></strong></p>
+								<p> <strong>$<?php echo number_format($row_book['price'], 2, '.', ','); ?></strong></p>
 								<p><?php echo htmlspecialchars($row_book['description']); ?></p>
 							</a>
 						</article>
