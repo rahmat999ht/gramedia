@@ -17,7 +17,7 @@ if (!$_SESSION['admin_role']) {
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
-  <title>Tables / Data - Gramedia Bootstrap Template</title>
+  <title>Tables / Data - Gramedia </title>
   <meta content="" name="description" />
   <meta content="" name="keywords" />
 

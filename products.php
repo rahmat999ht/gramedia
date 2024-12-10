@@ -122,7 +122,7 @@ $result_books = $koneksi->query($query_books);
 							</span>
 							<a href="product-details.php?id=<?php echo $row_book['id_book']; ?>">
 								<h2><?php echo htmlspecialchars($row_book['title']); ?></h2>
-								<p> <strong>$<?php echo number_format($row_book['price'], 2, '.', ','); ?></strong></p>
+								<p> <strong>Rp. <?php echo number_format($row_book['price'], 2, '.', ','); ?></strong></p>
 								<p><?php echo htmlspecialchars($row_book['description']); ?></p>
 							</a>
 						</article>
@@ -147,10 +147,7 @@ $result_books = $koneksi->query($query_books);
 					&nbsp;
 				</section>
 
-				<ul class="copyright">
-					<li>Copyright © 2020 Company Name </li>
-					<li>Template by: <a href="https://www.phpjabbers.com/">PHPJabbers.com</a></li>
-				</ul>
+				
 			</div>
 		</footer>
 

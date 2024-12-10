@@ -12,7 +12,7 @@ error_reporting(0);
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
-    <title>Pages / Login - Gramedia Bootstrap Template</title>
+    <title>Pages / Login - Gramedia </title>
     <meta content="" name="description" />
     <meta content="" name="keywords" />
 

@@ -34,7 +34,7 @@ if (isset($_GET['id'])) {
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
-  <title>Forms / Layouts - Gramedia Bootstrap Template</title>
+  <title>Forms / Layouts - Gramedia </title>
   <meta content="" name="description" />
   <meta content="" name="keywords" />
 
